@@ -1,3 +1,5 @@
 rootProject.name = "BuddiesCleanArchitecture"
 
 include ':app'
+include ':domain'
+include ':data'
