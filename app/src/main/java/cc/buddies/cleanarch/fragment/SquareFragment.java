@@ -1,13 +1,14 @@
 package cc.buddies.cleanarch.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cc.buddies.cleanarch.R;
 
@@ -24,5 +25,14 @@ public class SquareFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        view.findViewById(R.id.test_button).setOnClickListener(v -> {
+            MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(v.getContext());
+            materialAlertDialogBuilder
+                    .setTitle("title")
+                    .setMessage("你好啊")
+                    .setPositiveButton("确定", (dialog, which) ->
+                            Toast.makeText(v.getContext(), "123", Toast.LENGTH_SHORT).show())
+                    .show();
+        });
     }
 }

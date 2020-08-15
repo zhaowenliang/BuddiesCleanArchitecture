@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 覆写标题栏高度 -->
+    <dimen name="mtrl_toolbar_default_height" tools:ignore="PrivateResource">50dp</dimen>
+
+</resources>

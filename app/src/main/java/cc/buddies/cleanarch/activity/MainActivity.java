@@ -1,13 +1,12 @@
 package cc.buddies.cleanarch.activity;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -15,12 +14,12 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Random;
+
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.base.BaseActivity;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
-    private static final String TAG = "MainActivity";
+public class MainActivity extends BaseActivity implements NavController.OnDestinationChangedListener {
 
     private BottomNavigationView mNavView;
 
@@ -40,7 +39,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     private void initNavigation() {
         mNavView = findViewById(R.id.bottom_navigation_view);
-        mNavView.setOnNavigationItemSelectedListener(this);
+        // 设置NavigationUI.setupWithNavController后，此处监听无效
+        // mNavView.setOnNavigationItemSelectedListener(this);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_square, R.id.navigation_message, R.id.navigation_mine)
@@ -51,22 +51,18 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             NavController navController = NavHostFragment.findNavController(navHostFragment);
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             NavigationUI.setupWithNavController(mNavView, navController);
+
+            navController.addOnDestinationChangedListener(this);
         }
-
-        initMessageBadge();
     }
 
-    private void initMessageBadge() {
-        MenuItem menuItemMessage = mNavView.getMenu().findItem(R.id.navigation_message);
-        View actionView = menuItemMessage.getActionView();
-
-        BadgeDrawable orCreateBadge = mNavView.getOrCreateBadge(R.id.navigation_message);
-        orCreateBadge.setMaxCharacterCount(3);
-        orCreateBadge.setVisible(false);
-        orCreateBadge.updateBadgeCoordinates(actionView, mNavView);
+    private void setMessageBadge(int number) {
+        BadgeDrawable badge = mNavView.getOrCreateBadge(R.id.navigation_message);
+        badge.setMaxCharacterCount(3);
+        badge.setNumber(number);
     }
 
-    private void clearMessageBadgeCount() {
+    private void removeMessageBadge() {
         BadgeDrawable badge = mNavView.getBadge(R.id.navigation_message);
         if (badge != null) {
             badge.setVisible(false);
@@ -75,32 +71,14 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private void fillData() {
-        BadgeDrawable badge = mNavView.getBadge(R.id.navigation_message);
-        if (badge != null) {
-            badge.setVisible(true);
-            badge.setNumber(100);
-        }
+        Random r = new Random();
+        setMessageBadge(r.nextInt(100));
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Log.d(TAG, "onNavigationItemSelected item: " + item.getTitle());
-
-        switch (item.getItemId()) {
-            case R.id.navigation_home:
-                Log.d(TAG, getString(R.string.main_navigation_home));
-                return true;
-            case R.id.navigation_square:
-                Log.d(TAG, getString(R.string.main_navigation_square));
-                return true;
-            case R.id.navigation_message:
-                Log.d(TAG, getString(R.string.main_navigation_message));
-                clearMessageBadgeCount();
-                return true;
-            case R.id.navigation_mine:
-                Log.d(TAG, getString(R.string.main_navigation_mine));
-                return true;
+    public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+        if (destination.getId() == R.id.navigation_message) {
+            removeMessageBadge();
         }
-        return false;
     }
 }

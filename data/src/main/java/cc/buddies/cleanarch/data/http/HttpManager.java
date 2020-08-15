@@ -1,7 +1,9 @@
 package cc.buddies.cleanarch.data.http;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
+import cc.buddies.cleanarch.data.http.Interceptor.ResponseModelInterceptor;
 import cc.buddies.component.network.interceptor.HttpEncryptInterceptor;
 import cc.buddies.component.network.interceptor.HttpLoggingInterceptor;
 import okhttp3.OkHttpClient;
@@ -39,7 +41,11 @@ public class HttpManager {
         // log相关，同时处理了请求响应code!=0情况下移除info信息。
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("BuddiesCleanArch");
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);        // log打印级别，决定了log显示的详细程度
+        loggingInterceptor.setColorLevel(Level.INFO);
         builder.addInterceptor(loggingInterceptor);                                 // 添加OkHttp默认debug日志
+
+        // 添加请求响应数据模型转换拦截器
+        builder.addInterceptor(new ResponseModelInterceptor());
 
         // 添加加解密拦截器
         builder.addInterceptor(new HttpEncryptInterceptor());
@@ -71,6 +77,7 @@ public class HttpManager {
      */
     private synchronized Retrofit.Builder createRetrofitBuilder(OkHttpClient httpClient) {
         return new Retrofit.Builder()
+                .baseUrl("https://v.juhe.cn/toutiao/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

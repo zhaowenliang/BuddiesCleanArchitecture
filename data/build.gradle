@@ -42,6 +42,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${squareup_converter_gson}"
     implementation "com.squareup.retrofit2:adapter-rxjava3:${squareup_adapter_rxjava3}"
 
+    implementation "com.google.code.gson:gson:${google_gson_version}"
+
     // 个人仓库，已发布到JitPack
     implementation "com.github.zhaowenliang.BuddiesComponent:network:${buddies_component_network}"
 

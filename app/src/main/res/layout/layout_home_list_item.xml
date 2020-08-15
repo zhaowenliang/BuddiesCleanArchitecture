@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="10dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="10dp" />
+
+    <TextView
+        android:id="@+id/text_title"
+        style="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="中国生乳标准“全球最低”，为何十年不更新" />
+
+    <TextView
+        android:id="@+id/text_author"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toStartOf="@id/text_time"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/text_title"
+        tools:text="ZAKER哈尔滨" />
+
+    <TextView
+        android:id="@+id/text_time"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/text_author"
+        app:layout_constraintStart_toEndOf="@id/text_author"
+        app:layout_constraintTop_toTopOf="@id/text_author"
+        tools:text="3个小时前" />
+
+    <ImageView
+        android:id="@+id/image_des_start"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/image_placeholder_color"
+        android:contentDescription="@string/image_content_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/image_des_middle"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/text_author" />
+
+    <ImageView
+        android:id="@+id/image_des_middle"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/image_placeholder_color"
+        android:contentDescription="@string/image_content_description"
+        app:layout_constraintBottom_toBottomOf="@id/image_des_start"
+        app:layout_constraintEnd_toStartOf="@id/image_des_end"
+        app:layout_constraintStart_toEndOf="@id/image_des_start"
+        app:layout_constraintTop_toTopOf="@id/image_des_start" />
+
+    <ImageView
+        android:id="@+id/image_des_end"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="@color/image_placeholder_color"
+        android:contentDescription="@string/image_content_description"
+        app:layout_constraintBottom_toBottomOf="@id/image_des_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/image_des_middle"
+        app:layout_constraintTop_toTopOf="@id/image_des_start" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

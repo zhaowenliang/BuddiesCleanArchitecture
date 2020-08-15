@@ -5,9 +5,9 @@
     android:id="@+id/title_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:maxButtonHeight="?attr/actionBarSize"
     app:popupTheme="@style/AppTheme.PopupOverlay"
     tools:navigationIcon="?attr/homeAsUpIndicator"
     tools:titleText="标题" />
 
+<!-- app:maxButtonHeight="?attr/actionBarSize" -->
 <!-- android:background="?attr/colorPrimary" -->

@@ -12,6 +12,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "JUHE_API_KEY", "\"${JUHE_API_KEY}\""
     }
 
     buildTypes {
@@ -39,6 +41,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:${androidx_appcomat_version}"
     implementation "androidx.fragment:fragment:${androidx_fragment_version}"
+    implementation "androidx.recyclerview:recyclerview:${androidx_recyclerview_version}"
     implementation "androidx.constraintlayout:constraintlayout:${androidx_constraintlayout_version}"
     implementation "androidx.navigation:navigation-fragment:${androidx_navigation_version}"
     implementation "androidx.navigation:navigation-ui:${androidx_navigation_version}"
@@ -47,6 +50,12 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:${reactivex_rxjava_version}"
     implementation "io.reactivex.rxjava3:rxandroid:${reactivex_rxandroid_version}"
 
+    implementation "com.github.bumptech.glide:glide:${bumptech_glide_version}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${bumptech_glide_version}"
+
     // 个人仓库，已发布到JitPack
     implementation "com.github.zhaowenliang.BuddiesComponent:common:${buddies_component_common}"
+
+    implementation project(':domain')
+    implementation project(':data')
 }
