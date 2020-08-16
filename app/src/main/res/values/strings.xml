@@ -8,6 +8,8 @@
 
     <string name="image_content_description">图片</string>
 
+    <string name="state_empty_no_data">暂无数据</string>
+
     <string-array name="news_titles">
         <item>头条</item>
         <item>社会</item>

@@ -2,6 +2,7 @@ package cc.buddies.cleanarch.fragment;
 
 import android.os.Bundle;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -19,14 +20,13 @@ import java.util.List;
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.viewmodel.HomeViewModel;
 import cc.buddies.component.common.adapter.CommonPagerAdapter;
+import cc.buddies.component.common.helper.StatusBarHelper;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel mHomeViewModel;
 
     private ViewPager mViewPager;
-
-    private PagerAdapter mPagerAdapter;
 
     private List<String> mTitles;
 
@@ -58,11 +58,19 @@ public class HomeFragment extends Fragment {
         initData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        TypedValue typedValue = new TypedValue();
+        requireContext().getTheme().resolveAttribute(R.attr.colorSurface, typedValue, true);
+        int color = typedValue.data;
+
+        StatusBarHelper.tintStatusBar(requireContext(), requireActivity().getWindow(), color, false);
+    }
+
     private void initView(@NonNull View view) {
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         mViewPager = view.findViewById(R.id.view_pager);
-
-//        viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // TabLayout初始化
         tabLayout.setupWithViewPager(mViewPager);
@@ -87,8 +95,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void initViewPager() {
-        mPagerAdapter = new CommonPagerAdapter(getParentFragmentManager(), mFragments, mTitles);
-        mViewPager.setAdapter(mPagerAdapter);
+        PagerAdapter pagerAdapter = new CommonPagerAdapter(getParentFragmentManager(), mFragments, mTitles);
+        mViewPager.setAdapter(pagerAdapter);
     }
 
 }

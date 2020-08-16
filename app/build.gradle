@@ -54,6 +54,8 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:${bumptech_glide_version}"
     annotationProcessor "com.github.bumptech.glide:compiler:${bumptech_glide_version}"
 
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${cymchad_recyclerview_adapter_helper_version}"
+
     // 个人仓库，已发布到JitPack
     implementation "com.github.zhaowenliang.BuddiesComponent:common:${buddies_component_version}"
 

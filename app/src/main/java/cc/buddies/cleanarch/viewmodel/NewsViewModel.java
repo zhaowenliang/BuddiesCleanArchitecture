@@ -1,8 +1,5 @@
 package cc.buddies.cleanarch.viewmodel;
 
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
@@ -13,7 +10,6 @@ import cc.buddies.cleanarch.data.service.NewsRepositoryImpl;
 import cc.buddies.cleanarch.domain.interactor.GetNewsUseCase;
 import cc.buddies.cleanarch.domain.model.NewsModel;
 import cc.buddies.cleanarch.domain.repository.NewsRepository;
-import cc.buddies.component.common.provider.CommonContextProvider;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -21,6 +17,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class NewsViewModel extends BaseViewModel {
 
     private GetNewsUseCase mGetNewsUseCase;
+
+    private MutableLiveData<String> mStateErrorLiveData = new MutableLiveData<>();
 
     private MutableLiveData<List<NewsModel>> mNewsLiveData = new MutableLiveData<>();
 
@@ -30,18 +28,24 @@ public class NewsViewModel extends BaseViewModel {
         mGetNewsUseCase = new GetNewsUseCase(newsRepository);
     }
 
-    @NonNull
-    public MutableLiveData<List<NewsModel>> fetchNews(String type) {
+    public MutableLiveData<List<NewsModel>> getNewsLiveData() {
+        return mNewsLiveData;
+    }
+
+    public MutableLiveData<String> getStateErrorLiveData() {
+        return mStateErrorLiveData;
+    }
+
+    public void fetchNews(String type) {
+//        Disposable subscribe = Single.just(new ArrayList<NewsModel>())
+
         Disposable subscribe = mGetNewsUseCase.execute(type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(newsModels ->
-                                mNewsLiveData.setValue(newsModels),
-                        throwable ->
-                                Toast.makeText(CommonContextProvider.getApplication(), throwable.getMessage(), Toast.LENGTH_SHORT).show());
+                .subscribe(newsModels -> mNewsLiveData.setValue(newsModels),
+                        throwable -> mStateErrorLiveData.setValue(throwable.getMessage()));
 
         addDisposable(subscribe);
-        return mNewsLiveData;
     }
 
 }

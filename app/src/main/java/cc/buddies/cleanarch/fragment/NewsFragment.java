@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,23 +13,22 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.adapter.NewsRecyclerAdapter;
+import cc.buddies.cleanarch.adapter.NewsQuickAdapter;
 import cc.buddies.cleanarch.base.BaseFragment;
 import cc.buddies.cleanarch.domain.model.NewsModel;
+import cc.buddies.cleanarch.helper.StateViewHelper;
 import cc.buddies.cleanarch.viewmodel.NewsViewModel;
 import cc.buddies.component.common.utils.DensityUtils;
 
 public class NewsFragment extends BaseFragment {
 
-    private NewsRecyclerAdapter mRecyclerAdapter;
+    private BaseQuickAdapter<NewsModel, BaseViewHolder> mRecyclerAdapter;
 
     private NewsViewModel mNewsViewModel;
-
-    private List<NewsModel> mData;
 
     private String mType;
 
@@ -58,11 +58,6 @@ public class NewsFragment extends BaseFragment {
         }
     }
 
-    private void initViewModel() {
-        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
-        this.mNewsViewModel = viewModelProvider.get(NewsViewModel.class);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -73,18 +68,40 @@ public class NewsFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initViewModel();
+        observeLiveData();
         initData();
+    }
+
+    private void initViewModel() {
+        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
+        this.mNewsViewModel = viewModelProvider.get(NewsViewModel.class);
+    }
+
+    private void observeLiveData() {
+        // 获取数据结果
+        this.mNewsViewModel.getNewsLiveData().observe(getViewLifecycleOwner(), newsModels -> {
+            updateEmptyStateView();
+            mRecyclerAdapter.setUseEmpty(true);
+            mRecyclerAdapter.setList(newsModels);
+        });
+
+        // 获取数据出错
+        this.mNewsViewModel.getStateErrorLiveData().observe(getViewLifecycleOwner(), errorMessage -> {
+            updateErrorStateView(errorMessage);
+            mRecyclerAdapter.setUseEmpty(true);
+        });
     }
 
     private void initView(@NonNull View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        if (mData == null)
-            mData = new ArrayList<>();
-
-        mRecyclerAdapter = new NewsRecyclerAdapter(mData);
+        mRecyclerAdapter = new NewsQuickAdapter();
         recyclerView.setAdapter(mRecyclerAdapter);
+
+        // 设置空数据布局
+        mRecyclerAdapter.setEmptyView(R.layout.layout_state_view);
+        mRecyclerAdapter.setUseEmpty(false);
 
         if (recyclerView.getItemDecorationCount() == 0) {
             int itemOffset = DensityUtils.dp2px(requireContext(), 12);
@@ -100,14 +117,17 @@ public class NewsFragment extends BaseFragment {
     }
 
     private void initData() {
-        mNewsViewModel.fetchNews(mType).observe(getViewLifecycleOwner(), newsModels -> {
-            mData.clear();
-            if (newsModels != null) {
-                mData.addAll(newsModels);
-            }
+        mNewsViewModel.fetchNews(mType);
+    }
 
-            mRecyclerAdapter.notifyDataSetChanged();
-        });
+    private void updateEmptyStateView() {
+        FrameLayout stateLayout = mRecyclerAdapter.getEmptyLayout();
+        StateViewHelper.updateEmptyStateView(stateLayout);
+    }
+
+    private void updateErrorStateView(String message) {
+        FrameLayout stateLayout = mRecyclerAdapter.getEmptyLayout();
+        StateViewHelper.updateErrorStateView(stateLayout, message);
     }
 
 }
