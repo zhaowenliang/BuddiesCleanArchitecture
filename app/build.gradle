@@ -41,6 +41,7 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:${androidx_appcomat_version}"
     implementation "androidx.fragment:fragment:${androidx_fragment_version}"
+    implementation "androidx.viewpager:viewpager:${androidx_viewpager_version}"
     implementation "androidx.recyclerview:recyclerview:${androidx_recyclerview_version}"
     implementation "androidx.constraintlayout:constraintlayout:${androidx_constraintlayout_version}"
     implementation "androidx.navigation:navigation-fragment:${androidx_navigation_version}"
@@ -54,7 +55,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:${bumptech_glide_version}"
 
     // 个人仓库，已发布到JitPack
-    implementation "com.github.zhaowenliang.BuddiesComponent:common:${buddies_component_common}"
+    implementation "com.github.zhaowenliang.BuddiesComponent:common:${buddies_component_version}"
 
     implementation project(':domain')
     implementation project(':data')

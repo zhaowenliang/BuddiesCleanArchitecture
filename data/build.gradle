@@ -36,16 +36,16 @@ dependencies {
     implementation "androidx.annotation:annotation:${androidx_annotation_version}"
     implementation "io.reactivex.rxjava3:rxjava:${reactivex_rxjava_version}"
     implementation "io.reactivex.rxjava3:rxandroid:${reactivex_rxandroid_version}"
-    implementation "com.squareup.retrofit2:retrofit:${squareup_retrofit}"
+    implementation "com.squareup.retrofit2:retrofit:${squareup_retrofit_version}"
 
-    implementation "com.squareup.retrofit2:converter-scalars:${squareup_converter_scalars}"
-    implementation "com.squareup.retrofit2:converter-gson:${squareup_converter_gson}"
-    implementation "com.squareup.retrofit2:adapter-rxjava3:${squareup_adapter_rxjava3}"
+    implementation "com.squareup.retrofit2:converter-scalars:${squareup_converter_scalars_version}"
+    implementation "com.squareup.retrofit2:converter-gson:${squareup_converter_gson_version}"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:${squareup_adapter_rxjava3_version}"
 
     implementation "com.google.code.gson:gson:${google_gson_version}"
 
     // 个人仓库，已发布到JitPack
-    implementation "com.github.zhaowenliang.BuddiesComponent:network:${buddies_component_network}"
+    implementation "com.github.zhaowenliang.BuddiesComponent:network:${buddies_component_version}"
 
     implementation project(':domain')
 }

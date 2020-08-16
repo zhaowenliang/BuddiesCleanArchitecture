@@ -8,7 +8,7 @@
 
     <string name="image_content_description">图片</string>
 
-    <string-array name="news_types">
+    <string-array name="news_titles">
         <item>头条</item>
         <item>社会</item>
         <item>国内</item>
@@ -19,6 +19,19 @@
         <item>科技</item>
         <item>财经</item>
         <item>时尚</item>
+    </string-array>
+
+    <string-array name="news_keys">
+        <item>top</item>
+        <item>shehui</item>
+        <item>guonei</item>
+        <item>guoji</item>
+        <item>yule</item>
+        <item>tiyu</item>
+        <item>junshi</item>
+        <item>keji</item>
+        <item>caijing</item>
+        <item>shishang</item>
     </string-array>
 
 </resources>

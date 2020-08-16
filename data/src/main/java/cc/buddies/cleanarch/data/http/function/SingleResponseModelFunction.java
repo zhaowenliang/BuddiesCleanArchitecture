@@ -20,9 +20,9 @@ public class SingleResponseModelFunction<T> implements Function<ResponseModel<T>
             return Single.error(new Throwable("数据格式不正确"));
         }
 
-        if (responseModel.getErrorCode() != 0) {
-            int code = responseModel.getErrorCode();
-            String message = responseModel.getErrorMsg();
+        if (responseModel.getCode() != 0) {
+            int code = responseModel.getCode();
+            String message = responseModel.getMessage();
             return Single.error(new ResponseException(code, message));
         }
 

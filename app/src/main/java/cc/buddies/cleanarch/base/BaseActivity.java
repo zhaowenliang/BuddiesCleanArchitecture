@@ -13,6 +13,13 @@ import cc.buddies.component.common.activity.BuddiesCompatActivity;
 
 public class BaseActivity extends BuddiesCompatActivity {
 
+    public BaseActivity() {
+    }
+
+    public BaseActivity(int contentLayoutId) {
+        super(contentLayoutId);
+    }
+
     @Override
     protected int getTitleBarLayout() {
         return R.layout.layout_appbar_dark;

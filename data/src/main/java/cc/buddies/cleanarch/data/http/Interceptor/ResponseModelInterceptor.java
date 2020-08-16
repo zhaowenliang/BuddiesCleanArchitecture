@@ -1,7 +1,5 @@
 package cc.buddies.cleanarch.data.http.Interceptor;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import org.json.JSONException;
@@ -58,43 +56,57 @@ public class ResponseModelInterceptor implements Interceptor {
     }
 
     private String transData(String data) {
+        JSONObject jsonObject;
         try {
-            JSONObject jsonObject = new JSONObject(data);
-            JSONObject transObject = new JSONObject();
+            jsonObject = new JSONObject(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return data;
+        }
 
+        JSONObject transObject = new JSONObject();
+
+        try {
             if (!jsonObject.has("code")) {
-                final int status = jsonObject.optInt("error_code", 0);
-                transObject.put("code", status);
+                transObject.put("code", jsonObject.optInt("error_code", 0));
             } else {
                 transObject.put("code", jsonObject.optInt("code", 0));
             }
-
-            if (!jsonObject.has("message")) {
-                final String msg = jsonObject.optString("reason");
-                transObject.put("message", msg);
-            } else {
-                transObject.put("message", jsonObject.optString("message"));
-            }
-
-            if (!jsonObject.has("data")) {
-                final String result = jsonObject.optString("result");
-                JSONObject resultObject = new JSONObject(result);
-                if (resultObject.has("data")) {
-                    Object resultData = resultObject.opt("data");
-                    transObject.put("data", resultData);
-                } else {
-                    transObject.put("data", resultObject);
-                }
-            } else {
-                transObject.put("data", jsonObject.opt("data"));
-            }
-
-            return transObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        return data;
+        try {
+            if (!jsonObject.has("message")) {
+                transObject.put("message", jsonObject.optString("reason"));
+            } else {
+                transObject.put("message", jsonObject.optString("message"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Object optData;
+
+            if (!jsonObject.has("data")) {
+                final String result = jsonObject.optString("result");
+                if ("".equals(result) || "null".equalsIgnoreCase(result)) {
+                    optData = null;
+                } else {
+                    JSONObject resultObject = new JSONObject(result);
+                    optData = resultObject.has("data") ? resultObject.opt("data") : resultObject;
+                }
+            } else {
+                optData = jsonObject.opt("data");
+            }
+
+            transObject.put("data", optData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return transObject.toString();
     }
 
     private boolean isJSON(MediaType mediaType) {

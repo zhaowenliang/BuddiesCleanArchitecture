@@ -4,24 +4,24 @@ import java.io.Serializable;
 
 public class ResponseModel<T> implements Serializable {
 
-    private int errorCode;
-    private String errorMsg;
+    private int code;
+    private String message;
     private T data;
 
-    public int getErrorCode() {
-        return errorCode;
+    public int getCode() {
+        return code;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {

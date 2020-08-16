@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity implements NavController.OnDestin
     private BottomNavigationView mNavView;
 
     @Override
-    protected boolean hasBackIcon() {
+    protected boolean useCommonLayout() {
         return false;
     }
 
@@ -42,15 +42,16 @@ public class MainActivity extends BaseActivity implements NavController.OnDestin
         // 设置NavigationUI.setupWithNavController后，此处监听无效
         // mNavView.setOnNavigationItemSelectedListener(this);
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_square, R.id.navigation_message, R.id.navigation_mine)
-                .build();
-
         Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
         if (navHostFragment != null) {
             NavController navController = NavHostFragment.findNavController(navHostFragment);
-            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
             NavigationUI.setupWithNavController(mNavView, navController);
+
+            // 如果没有设置ActionBar标题栏，则不需要设置此项
+//            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//                    R.id.navigation_home, R.id.navigation_square, R.id.navigation_message, R.id.navigation_mine)
+//                    .build();
+//            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
             navController.addOnDestinationChangedListener(this);
         }

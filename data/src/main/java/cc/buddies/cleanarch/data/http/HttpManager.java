@@ -3,9 +3,9 @@ package cc.buddies.cleanarch.data.http;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import cc.buddies.cleanarch.data.http.Interceptor.HttpLoggingInterceptor;
 import cc.buddies.cleanarch.data.http.Interceptor.ResponseModelInterceptor;
 import cc.buddies.component.network.interceptor.HttpEncryptInterceptor;
-import cc.buddies.component.network.interceptor.HttpLoggingInterceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
