@@ -81,15 +81,11 @@ public class NewsFragment extends BaseFragment {
         // 获取数据结果
         this.mNewsViewModel.getNewsLiveData().observe(getViewLifecycleOwner(), newsModels -> {
             updateEmptyStateView();
-            mRecyclerAdapter.setUseEmpty(true);
             mRecyclerAdapter.setList(newsModels);
         });
 
         // 获取数据出错
-        this.mNewsViewModel.getStateErrorLiveData().observe(getViewLifecycleOwner(), errorMessage -> {
-            updateErrorStateView(errorMessage);
-            mRecyclerAdapter.setUseEmpty(true);
-        });
+        this.mNewsViewModel.getStateErrorLiveData().observe(getViewLifecycleOwner(), this::updateErrorStateView);
     }
 
     private void initView(@NonNull View view) {
@@ -101,7 +97,7 @@ public class NewsFragment extends BaseFragment {
 
         // 设置空数据布局
         mRecyclerAdapter.setEmptyView(R.layout.layout_state_view);
-        mRecyclerAdapter.setUseEmpty(false);
+        updateLoadingStateView();
 
         if (recyclerView.getItemDecorationCount() == 0) {
             int itemOffset = DensityUtils.dp2px(requireContext(), 12);
@@ -118,6 +114,11 @@ public class NewsFragment extends BaseFragment {
 
     private void initData() {
         mNewsViewModel.fetchNews(mType);
+    }
+
+    private void updateLoadingStateView() {
+        FrameLayout stateLayout = mRecyclerAdapter.getEmptyLayout();
+        StateViewHelper.updateLoadingStateView(stateLayout);
     }
 
     private void updateEmptyStateView() {

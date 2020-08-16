@@ -8,6 +8,16 @@ import cc.buddies.cleanarch.R;
 
 public class StateViewHelper {
 
+    public static void updateLoadingStateView(View stateView) {
+        if (stateView == null) return;
+
+        ImageView imageStateView = stateView.findViewById(R.id.image_state_view);
+        TextView textStateDes = stateView.findViewById(R.id.text_state_des);
+
+        imageStateView.setImageResource(R.drawable.state_loading_drawable);
+        textStateDes.setText("");
+    }
+
     public static void updateEmptyStateView(View stateView) {
         if (stateView == null) return;
 
