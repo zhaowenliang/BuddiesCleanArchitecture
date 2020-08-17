@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.adapter.NewsQuickAdapter;
@@ -25,6 +27,8 @@ import cc.buddies.cleanarch.viewmodel.NewsViewModel;
 import cc.buddies.component.common.utils.DensityUtils;
 
 public class NewsFragment extends BaseFragment {
+
+    private SmartRefreshLayout mSmartRefreshLayout;
 
     private BaseQuickAdapter<NewsModel, BaseViewHolder> mRecyclerAdapter;
 
@@ -82,13 +86,25 @@ public class NewsFragment extends BaseFragment {
         this.mNewsViewModel.getNewsLiveData().observe(getViewLifecycleOwner(), newsModels -> {
             updateEmptyStateView();
             mRecyclerAdapter.setList(newsModels);
+            // 结束刷新
+            finishOnRefresh(true);
         });
 
         // 获取数据出错
-        this.mNewsViewModel.getStateErrorLiveData().observe(getViewLifecycleOwner(), this::updateErrorStateView);
+        this.mNewsViewModel.getStateErrorLiveData().observe(getViewLifecycleOwner(), s -> {
+            updateErrorStateView(s);
+            // 结束刷新
+            finishOnRefresh(false);
+        });
     }
 
     private void initView(@NonNull View view) {
+        mSmartRefreshLayout = view.findViewById(R.id.smart_refresh_layout);
+        mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(requireContext()));
+        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> {
+            mNewsViewModel.fetchNews(mType);
+        });
+
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -114,6 +130,10 @@ public class NewsFragment extends BaseFragment {
 
     private void initData() {
         mNewsViewModel.fetchNews(mType);
+    }
+
+    private void finishOnRefresh(boolean success) {
+        mSmartRefreshLayout.finishRefresh(success);
     }
 
     private void updateLoadingStateView() {
