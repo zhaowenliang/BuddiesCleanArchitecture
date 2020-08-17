@@ -6,6 +6,9 @@
     <string name="main_navigation_message">消息</string>
     <string name="main_navigation_mine">我的</string>
 
+    <string name="message_system_notify">系统通知</string>
+    <string name="message_user_notify">用户通知</string>
+
     <string name="image_content_description">图片</string>
 
     <string name="state_empty_no_data">暂无数据</string>

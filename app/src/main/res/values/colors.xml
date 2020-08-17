@@ -5,4 +5,7 @@
     <color name="colorAccent">#c62828</color>
     
     <color name="image_placeholder_color">#EFEFEF</color>
+
+    <color name="message_background_color">#EDEDED</color>
+
 </resources>

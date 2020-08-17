@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/panel_notify_message"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="18dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="18dp" />
+
+    <!-- 系统通知 -->
+
+    <ImageView
+        android:id="@+id/iv_system_notify_icon"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:contentDescription="@string/image_content_description"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/message_system_notification_icon"
+        app:layout_constraintBottom_toTopOf="@id/tv_system_notify"
+        app:layout_constraintLeft_toRightOf="@id/tv_system_notify"
+        app:layout_constraintRight_toLeftOf="@id/tv_system_notify"
+        app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+    <TextView
+        android:id="@+id/tv_system_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/message_system_notify"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tv_user_notify"
+        app:layout_constraintTop_toBottomOf="@id/iv_system_notify_icon" />
+
+    <!-- 用户通知 -->
+
+    <ImageView
+        android:id="@+id/iv_user_notify_icon"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:contentDescription="@string/image_content_description"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/message_user_notification_icon"
+        app:layout_constraintBottom_toTopOf="@id/tv_user_notify"
+        app:layout_constraintLeft_toRightOf="@id/tv_user_notify"
+        app:layout_constraintRight_toLeftOf="@id/tv_user_notify"
+        app:layout_constraintTop_toTopOf="@id/guideline_top" />
+
+    <TextView
+        android:id="@+id/tv_user_notify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/message_user_notify"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintLeft_toRightOf="@id/tv_system_notify"
+        app:layout_constraintTop_toBottomOf="@id/iv_user_notify_icon"
+        app:layout_goneMarginStart="0dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
