@@ -19,7 +19,7 @@ import java.util.List;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.viewmodel.HomeViewModel;
-import cc.buddies.component.common.adapter.CommonPagerAdapter;
+import cc.buddies.component.common.adapter.CommonStatePagerAdapter;
 import cc.buddies.component.common.helper.StatusBarHelper;
 
 public class HomeFragment extends Fragment {
@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initViewPager() {
-        PagerAdapter pagerAdapter = new CommonPagerAdapter(getParentFragmentManager(), mFragments, mTitles);
+        PagerAdapter pagerAdapter = new CommonStatePagerAdapter(getParentFragmentManager(), mFragments, mTitles);
         mViewPager.setAdapter(pagerAdapter);
     }
 

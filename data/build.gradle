@@ -44,8 +44,12 @@ dependencies {
 
     implementation "com.google.code.gson:gson:${google_gson_version}"
 
+    implementation "androidx.room:room-runtime:${androidx_room_version}"
+    annotationProcessor "androidx.room:room-compiler:${androidx_room_version}"
+
     // 个人仓库，已发布到JitPack
     implementation "com.github.zhaowenliang.BuddiesComponent:network:${buddies_component_version}"
+    implementation "com.github.zhaowenliang.BuddiesComponent:storage:${buddies_component_version}"
 
     implementation project(':domain')
 }

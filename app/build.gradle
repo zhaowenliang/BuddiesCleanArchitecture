@@ -39,6 +39,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation "com.google.android.material:material:${google_material_version}"
+
     implementation "androidx.appcompat:appcompat:${androidx_appcomat_version}"
     implementation "androidx.fragment:fragment:${androidx_fragment_version}"
     implementation "androidx.viewpager:viewpager:${androidx_viewpager_version}"
@@ -46,7 +48,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${androidx_constraintlayout_version}"
     implementation "androidx.navigation:navigation-fragment:${androidx_navigation_version}"
     implementation "androidx.navigation:navigation-ui:${androidx_navigation_version}"
-    implementation "com.google.android.material:material:${google_material_version}"
 
     implementation "io.reactivex.rxjava3:rxjava:${reactivex_rxjava_version}"
     implementation "io.reactivex.rxjava3:rxandroid:${reactivex_rxandroid_version}"

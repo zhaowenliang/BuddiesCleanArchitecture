@@ -1,11 +1,18 @@
 package cc.buddies.cleanarch.data.http;
 
+import android.content.Context;
+
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import cc.buddies.cleanarch.data.http.Interceptor.HttpLoggingInterceptor;
+import cc.buddies.cleanarch.data.http.Interceptor.HttpCacheInterceptor;
 import cc.buddies.cleanarch.data.http.Interceptor.ResponseModelInterceptor;
 import cc.buddies.component.network.interceptor.HttpEncryptInterceptor;
+import cc.buddies.component.network.interceptor.HttpLoggingInterceptor;
+import cc.buddies.component.storage.StorageUtils;
+import cc.buddies.component.storage.provider.StorageContextProvider;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -35,6 +42,12 @@ public class HttpManager {
     private synchronized OkHttpClient buildHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
+        // 超时时间设置，默认60秒
+        long DEFAULT_MILLISECONDS = 60;
+        builder.readTimeout(DEFAULT_MILLISECONDS, TimeUnit.SECONDS);      //全局的读取超时时间
+        builder.writeTimeout(DEFAULT_MILLISECONDS, TimeUnit.SECONDS);     //全局的写入超时时间
+        builder.connectTimeout(DEFAULT_MILLISECONDS, TimeUnit.SECONDS);   //全局的连接超时时间
+
         // 添加请求头
         // builder.addInterceptor(new HttpHeaderInterceptor());
 
@@ -50,11 +63,19 @@ public class HttpManager {
         // 添加加解密拦截器
         builder.addInterceptor(new HttpEncryptInterceptor());
 
-        // 超时时间设置，默认60秒
-        long DEFAULT_MILLISECONDS = 60;
-        builder.readTimeout(DEFAULT_MILLISECONDS, TimeUnit.SECONDS);      //全局的读取超时时间
-        builder.writeTimeout(DEFAULT_MILLISECONDS, TimeUnit.SECONDS);     //全局的写入超时时间
-        builder.connectTimeout(DEFAULT_MILLISECONDS, TimeUnit.SECONDS);   //全局的连接超时时间
+        // 添加数据缓存拦截器（注意：修改Response需要使用网络拦截器）
+        builder.addNetworkInterceptor(new HttpCacheInterceptor());
+
+        // 拦截器调用顺序
+        // Request <-> 自定义拦截器 <-> CacheInterceptor <-> 网络拦截器 <-> Response
+
+        // 配置缓存
+        Context application = StorageContextProvider.getApplication();
+        File externalCacheDir = StorageUtils.getExternalCacheDir(application);
+        if (externalCacheDir != null) {
+            int cacheSize = 10 * 1024 * 1024;
+            builder.cache(new Cache(externalCacheDir, cacheSize));
+        }
 
         // 配置缓存
         // ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
