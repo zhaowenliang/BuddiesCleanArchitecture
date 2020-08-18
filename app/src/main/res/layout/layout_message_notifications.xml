@@ -27,8 +27,8 @@
         android:id="@+id/iv_system_notify_icon"
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:contentDescription="@string/image_content_description"
         android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/image_content_description"
         android:src="@drawable/message_system_notification_icon"
         app:layout_constraintBottom_toTopOf="@id/tv_system_notify"
         app:layout_constraintLeft_toRightOf="@id/tv_system_notify"
@@ -52,8 +52,8 @@
         android:id="@+id/iv_user_notify_icon"
         android:layout_width="38dp"
         android:layout_height="38dp"
-        android:contentDescription="@string/image_content_description"
         android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/image_content_description"
         android:src="@drawable/message_user_notification_icon"
         app:layout_constraintBottom_toTopOf="@id/tv_user_notify"
         app:layout_constraintLeft_toRightOf="@id/tv_user_notify"
@@ -71,7 +71,6 @@
         app:layout_constraintLeft_toRightOf="@id/tv_system_notify"
         app:layout_constraintTop_toBottomOf="@id/iv_user_notify_icon"
         app:layout_goneMarginStart="0dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

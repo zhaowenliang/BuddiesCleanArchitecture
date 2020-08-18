@@ -17,13 +17,20 @@ public class SessionsQuickAdapter extends BaseQuickAdapter<Object, BaseViewHolde
 
     @Override
     protected void convert(@NotNull BaseViewHolder holder, Object o) {
+        Random r = new Random();
+        int unReadCount = r.nextInt(10);
+
+        String description = unReadCount < 5
+                ? "今天天气好晴朗，处处好风光"
+                : "今天天气好晴朗，处处好风光。今天天气好晴朗，处处好风光。今天天气好晴朗，处处好风光";
+
         holder.setImageResource(R.id.image_avatar, R.drawable.message_user_notification_icon);
         holder.setText(R.id.text_name, "张三");
-        holder.setText(R.id.text_description, "今天天气好晴朗，处处好风光");
+        holder.setText(R.id.text_description, description);
         holder.setText(R.id.text_time, "刚刚");
 
-        Random r = new Random();
-        String tipCount = String.valueOf(r.nextInt());
-        holder.setText(R.id.text_tips, tipCount);
+
+        holder.setText(R.id.text_tips, String.valueOf(unReadCount));
+        holder.setVisible(R.id.text_tips, unReadCount > 0);
     }
 }

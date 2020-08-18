@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="?attr/colorSurface"
     android:foreground="?attr/selectableItemBackground"
     tools:ignore="UnusedAttribute">
 
@@ -26,11 +26,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@+id/image_avatar"
-        app:layout_constraintRight_toLeftOf="@+id/text_time"
-        app:layout_constraintTop_toTopOf="@+id/image_avatar"
+        app:layout_constraintLeft_toRightOf="@id/image_avatar"
+        app:layout_constraintRight_toLeftOf="@id/text_time"
+        app:layout_constraintTop_toTopOf="@id/image_avatar"
         app:layout_goneMarginEnd="10dp"
         tools:text="大王" />
 
@@ -41,10 +42,10 @@
         android:layout_marginTop="2dp"
         android:singleLine="true"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
-        app:layout_constraintLeft_toLeftOf="@+id/text_name"
-        app:layout_constraintRight_toLeftOf="@+id/text_tips"
-        app:layout_constraintTop_toBottomOf="@+id/text_name"
+        app:layout_constraintBottom_toBottomOf="@id/image_avatar"
+        app:layout_constraintLeft_toLeftOf="@id/text_name"
+        app:layout_constraintRight_toLeftOf="@id/text_tips"
+        app:layout_constraintTop_toBottomOf="@id/text_name"
         app:layout_goneMarginEnd="10dp"
         tools:text="How are you? I'm fine, thank you!" />
 
@@ -55,10 +56,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_name"
-        app:layout_constraintLeft_toRightOf="@+id/text_name"
+        app:layout_constraintBottom_toBottomOf="@id/text_name"
+        app:layout_constraintLeft_toRightOf="@id/text_name"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_name"
+        app:layout_constraintTop_toTopOf="@id/text_name"
         tools:text="12:40" />
 
     <TextView
@@ -68,6 +69,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/message_notification_badge"
+        android:gravity="center"
         android:includeFontPadding="false"
         android:paddingStart="6dp"
         android:paddingTop="2dp"
@@ -77,10 +79,10 @@
         android:textColor="@android:color/white"
         android:textSize="10sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/text_description"
-        app:layout_constraintLeft_toRightOf="@+id/text_description"
+        app:layout_constraintBottom_toBottomOf="@id/text_description"
+        app:layout_constraintLeft_toRightOf="@id/text_description"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_description"
+        app:layout_constraintTop_toTopOf="@id/text_description"
         tools:ignore="SmallSp"
         tools:text="1"
         tools:visibility="visible" />
