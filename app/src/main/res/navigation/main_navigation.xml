@@ -27,6 +27,15 @@
         android:id="@+id/navigation_mine"
         android:name="cc.buddies.cleanarch.fragment.MineFragment"
         android:label="@string/main_navigation_mine"
-        tools:layout="@layout/fragment_mine" />
+        tools:layout="@layout/fragment_mine">
+
+        <action
+            android:id="@+id/action_to_settings"
+            app:destination="@id/settings_navigation" />
+
+    </fragment>
+
+    <!-- 设置页 导航图 -->
+    <include app:graph="@navigation/settings_navigation" />
 
 </navigation>

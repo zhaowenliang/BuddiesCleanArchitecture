@@ -18,9 +18,9 @@ public class NewsViewModel extends BaseViewModel {
 
     private GetNewsUseCase mGetNewsUseCase;
 
-    private MutableLiveData<String> mStateErrorLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> stateErrorLiveData = new MutableLiveData<>();
 
-    private MutableLiveData<List<NewsModel>> mNewsLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<NewsModel>> newsLiveData = new MutableLiveData<>();
 
     public NewsViewModel() {
         String apiKey = BuildConfig.JUHE_API_KEY;
@@ -28,22 +28,12 @@ public class NewsViewModel extends BaseViewModel {
         mGetNewsUseCase = new GetNewsUseCase(newsRepository);
     }
 
-    public MutableLiveData<List<NewsModel>> getNewsLiveData() {
-        return mNewsLiveData;
-    }
-
-    public MutableLiveData<String> getStateErrorLiveData() {
-        return mStateErrorLiveData;
-    }
-
     public void fetchNews(String type) {
-//        Disposable subscribe = Single.just(new ArrayList<NewsModel>())
-
         Disposable subscribe = mGetNewsUseCase.execute(type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(newsModels -> mNewsLiveData.setValue(newsModels),
-                        throwable -> mStateErrorLiveData.setValue(throwable.getMessage()));
+                .subscribe(newsModels -> newsLiveData.setValue(newsModels),
+                        throwable -> stateErrorLiveData.setValue(throwable.getMessage()));
 
         addDisposable(subscribe);
     }

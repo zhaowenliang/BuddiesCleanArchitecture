@@ -9,6 +9,18 @@
     <string name="message_system_notify">系统通知</string>
     <string name="message_user_notify">用户通知</string>
 
+    <string name="person_trends_label">动态</string>
+    <string name="person_follow_label">关注</string>
+    <string name="person_fans_label">粉丝</string>
+
+    <string name="settings_title">设置</string>
+
+    <string name="settings_person_info_label">个人信息</string>
+    <string name="settings_cache_manage_label">缓存管理</string>
+    <string name="settings_about_us_label">关于我们</string>
+    <string name="settings_logout_label">退出登录</string>
+    <string name="settings_version_info">Clean Arch Version %1$s</string>
+
     <string name="image_content_description">图片</string>
 
     <string name="state_empty_no_data">暂无数据</string>

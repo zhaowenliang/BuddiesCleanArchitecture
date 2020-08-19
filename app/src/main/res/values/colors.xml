@@ -8,4 +8,7 @@
 
     <color name="message_background_color">#EDEDED</color>
 
+    <color name="level_progress_background_color">#999999</color>
+    <color name="level_progress_color">#CCCCCC</color>
+
 </resources>

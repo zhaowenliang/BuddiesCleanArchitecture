@@ -2,16 +2,16 @@ package cc.buddies.cleanarch.fragment;
 
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.component.common.helper.StatusBarHelper;
+import cc.buddies.component.common.utils.ToastUtils;
 
 public class MineFragment extends Fragment {
 
@@ -26,6 +26,7 @@ public class MineFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initView(view);
     }
 
     @Override
@@ -36,5 +37,17 @@ public class MineFragment extends Fragment {
         int color = typedValue.data;
 
         StatusBarHelper.tintStatusBar(requireContext(), requireActivity().getWindow(), color, false);
+    }
+
+    private void initView(View view) {
+        view.findViewById(R.id.panel_trends).setOnClickListener(v -> ToastUtils.shortToast(requireContext(), R.string.person_trends_label));
+        view.findViewById(R.id.panel_follow).setOnClickListener(v -> ToastUtils.shortToast(requireContext(), R.string.person_follow_label));
+        view.findViewById(R.id.panel_fans).setOnClickListener(v -> ToastUtils.shortToast(requireContext(), R.string.person_fans_label));
+
+        view.findViewById(R.id.image_button_setting).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_to_settings));
+
+//        view.findViewById(R.id.image_button_setting).setOnClickListener(v -> {
+//            Navigation.findNavController(v).navigate(R.id.action_to_settings);
+//        });
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.viewmodel.HomeViewModel;
-import cc.buddies.component.common.adapter.CommonStatePagerAdapter;
+import cc.buddies.component.common.adapter.CommonPagerAdapter;
 import cc.buddies.component.common.helper.StatusBarHelper;
 
 public class HomeFragment extends Fragment {
@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initViewModel();
+        observeLiveData();
         initData();
     }
 
@@ -77,8 +78,8 @@ public class HomeFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
     }
 
-    private void initData() {
-        mHomeViewModel.getNewsTitles(requireContext()).observe(getViewLifecycleOwner(), pairs -> {
+    private void observeLiveData() {
+        this.mHomeViewModel.newsTitlesLiveData.observe(getViewLifecycleOwner(), pairs -> {
             mTitles = new ArrayList<>(pairs.size());
             mFragments.clear();
 
@@ -94,8 +95,12 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void initData() {
+        mHomeViewModel.getNewsTitles(requireContext());
+    }
+
     private void initViewPager() {
-        PagerAdapter pagerAdapter = new CommonStatePagerAdapter(getParentFragmentManager(), mFragments, mTitles);
+        PagerAdapter pagerAdapter = new CommonPagerAdapter(getChildFragmentManager(), mFragments, mTitles);
         mViewPager.setAdapter(pagerAdapter);
     }
 

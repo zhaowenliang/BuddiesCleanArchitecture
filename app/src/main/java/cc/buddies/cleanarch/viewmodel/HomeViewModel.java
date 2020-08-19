@@ -3,7 +3,6 @@ package cc.buddies.cleanarch.viewmodel;
 import android.content.Context;
 import android.util.Pair;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -14,9 +13,9 @@ import cc.buddies.cleanarch.base.BaseViewModel;
 
 public class HomeViewModel extends BaseViewModel {
 
-    private MutableLiveData<List<Pair<String, String>>> newsTitlesLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<Pair<String, String>>> newsTitlesLiveData = new MutableLiveData<>();
 
-    public LiveData<List<Pair<String, String>>> getNewsTitles(Context context) {
+    public void getNewsTitles(Context context) {
         String[] stringTitles = context.getResources().getStringArray(R.array.news_titles);
         String[] stringKeys = context.getResources().getStringArray(R.array.news_keys);
 
@@ -29,7 +28,6 @@ public class HomeViewModel extends BaseViewModel {
         }
 
         newsTitlesLiveData.setValue(newsTitles);
-        return newsTitlesLiveData;
     }
 
 }

@@ -83,7 +83,7 @@ public class NewsFragment extends BaseFragment {
 
     private void observeLiveData() {
         // 获取数据结果
-        this.mNewsViewModel.getNewsLiveData().observe(getViewLifecycleOwner(), newsModels -> {
+        this.mNewsViewModel.newsLiveData.observe(getViewLifecycleOwner(), newsModels -> {
             updateEmptyStateView();
             mRecyclerAdapter.setList(newsModels);
             // 结束刷新
@@ -91,7 +91,7 @@ public class NewsFragment extends BaseFragment {
         });
 
         // 获取数据出错
-        this.mNewsViewModel.getStateErrorLiveData().observe(getViewLifecycleOwner(), s -> {
+        this.mNewsViewModel.stateErrorLiveData.observe(getViewLifecycleOwner(), s -> {
             updateErrorStateView(s);
             // 结束刷新
             finishOnRefresh(false);
@@ -101,9 +101,7 @@ public class NewsFragment extends BaseFragment {
     private void initView(@NonNull View view) {
         mSmartRefreshLayout = view.findViewById(R.id.smart_refresh_layout);
         mSmartRefreshLayout.setRefreshHeader(new ClassicsHeader(requireContext()));
-        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> {
-            mNewsViewModel.fetchNews(mType);
-        });
+        mSmartRefreshLayout.setOnRefreshListener(refreshLayout -> mNewsViewModel.fetchNews(mType));
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -113,7 +111,7 @@ public class NewsFragment extends BaseFragment {
 
         // 设置空数据布局
         mRecyclerAdapter.setEmptyView(R.layout.layout_state_view);
-        updateLoadingStateView();
+        mRecyclerAdapter.setUseEmpty(false);
 
         if (recyclerView.getItemDecorationCount() == 0) {
             int itemOffset = DensityUtils.dp2px(requireContext(), 12);
@@ -136,18 +134,15 @@ public class NewsFragment extends BaseFragment {
         mSmartRefreshLayout.finishRefresh(success);
     }
 
-    private void updateLoadingStateView() {
-        FrameLayout stateLayout = mRecyclerAdapter.getEmptyLayout();
-        StateViewHelper.updateLoadingStateView(stateLayout);
-    }
-
     private void updateEmptyStateView() {
         FrameLayout stateLayout = mRecyclerAdapter.getEmptyLayout();
+        mRecyclerAdapter.setUseEmpty(true);
         StateViewHelper.updateEmptyStateView(stateLayout);
     }
 
     private void updateErrorStateView(String message) {
         FrameLayout stateLayout = mRecyclerAdapter.getEmptyLayout();
+        mRecyclerAdapter.setUseEmpty(true);
         StateViewHelper.updateErrorStateView(stateLayout, message);
     }
 
