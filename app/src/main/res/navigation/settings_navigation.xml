@@ -7,7 +7,7 @@
 
     <activity
         android:id="@+id/navigation_settings"
-        android:name="cc.buddies.cleanarch.activity.SettingsActivity"
+        android:name="cc.buddies.cleanarch.person.activity.SettingsActivity"
         android:label="@string/settings_title"
         tools:layout="@layout/activity_settings" />
 

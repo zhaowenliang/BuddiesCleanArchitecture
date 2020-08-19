@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="cc.buddies.cleanarch.fragment.HomeFragment"
+        android:name="cc.buddies.cleanarch.home.fragment.HomeFragment"
         android:label="@string/main_navigation_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_square"
-        android:name="cc.buddies.cleanarch.fragment.SquareFragment"
+        android:name="cc.buddies.cleanarch.square.fragment.SquareFragment"
         android:label="@string/main_navigation_square"
         tools:layout="@layout/fragment_square" />
 
     <fragment
         android:id="@+id/navigation_message"
-        android:name="cc.buddies.cleanarch.fragment.MessageFragment"
+        android:name="cc.buddies.cleanarch.message.fragment.MessageFragment"
         android:label="@string/main_navigation_message"
         tools:layout="@layout/fragment_message" />
 
     <fragment
         android:id="@+id/navigation_mine"
-        android:name="cc.buddies.cleanarch.fragment.MineFragment"
+        android:name="cc.buddies.cleanarch.person.fragment.MineFragment"
         android:label="@string/main_navigation_mine"
         tools:layout="@layout/fragment_mine">
 
