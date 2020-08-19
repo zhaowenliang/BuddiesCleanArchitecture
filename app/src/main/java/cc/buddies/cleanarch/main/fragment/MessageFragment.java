@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch.message.fragment;
+package cc.buddies.cleanarch.main.fragment;
 
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.message.adapter.SessionsQuickAdapter;
+import cc.buddies.cleanarch.main.adapter.SessionsQuickAdapter;
 import cc.buddies.cleanarch.common.helper.BadgeDrawableHelper;
 import cc.buddies.component.common.helper.StatusBarHelper;
 import cc.buddies.component.common.utils.DensityUtils;

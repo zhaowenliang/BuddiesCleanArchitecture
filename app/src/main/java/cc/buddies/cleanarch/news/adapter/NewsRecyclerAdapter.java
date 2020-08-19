@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch.home.adapter;
+package cc.buddies.cleanarch.news.adapter;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch;
+package cc.buddies.cleanarch.main.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Random;
 
+import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseActivity;
 
 public class MainActivity extends BaseActivity implements NavController.OnDestinationChangedListener, BottomNavigationView.OnNavigationItemReselectedListener {

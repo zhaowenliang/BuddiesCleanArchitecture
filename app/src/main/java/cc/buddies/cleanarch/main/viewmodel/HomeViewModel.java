@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch.home.viewmodel;
+package cc.buddies.cleanarch.main.viewmodel;
 
 import android.content.Context;
 import android.util.Pair;

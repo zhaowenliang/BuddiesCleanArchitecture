@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch.home.fragment;
+package cc.buddies.cleanarch.news.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
@@ -19,11 +19,11 @@ import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.home.adapter.NewsQuickAdapter;
+import cc.buddies.cleanarch.news.adapter.NewsQuickAdapter;
 import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.domain.model.NewsModel;
 import cc.buddies.cleanarch.common.helper.StateViewHelper;
-import cc.buddies.cleanarch.home.viewmodel.NewsViewModel;
+import cc.buddies.cleanarch.news.viewmodel.NewsViewModel;
 import cc.buddies.component.common.utils.DensityUtils;
 
 public class NewsFragment extends BaseFragment {

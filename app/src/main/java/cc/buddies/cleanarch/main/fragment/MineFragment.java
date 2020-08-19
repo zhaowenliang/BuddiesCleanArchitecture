@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch.person.fragment;
+package cc.buddies.cleanarch.main.fragment;
 
 import android.os.Bundle;
 import android.util.TypedValue;

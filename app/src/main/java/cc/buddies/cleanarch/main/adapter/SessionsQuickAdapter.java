@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch.message.adapter;
+package cc.buddies.cleanarch.main.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;

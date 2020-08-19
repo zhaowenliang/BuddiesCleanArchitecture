@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch.home.fragment;
+package cc.buddies.cleanarch.main.fragment;
 
 import android.os.Bundle;
 import android.util.Pair;
@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.home.viewmodel.HomeViewModel;
+import cc.buddies.cleanarch.news.fragment.NewsFragment;
+import cc.buddies.cleanarch.main.viewmodel.HomeViewModel;
 import cc.buddies.component.common.adapter.CommonPagerAdapter;
 import cc.buddies.component.common.helper.StatusBarHelper;
 
