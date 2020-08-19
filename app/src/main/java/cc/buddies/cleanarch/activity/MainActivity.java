@@ -1,6 +1,7 @@
 package cc.buddies.cleanarch.activity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +19,7 @@ import java.util.Random;
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.base.BaseActivity;
 
-public class MainActivity extends BaseActivity implements NavController.OnDestinationChangedListener {
+public class MainActivity extends BaseActivity implements NavController.OnDestinationChangedListener, BottomNavigationView.OnNavigationItemReselectedListener {
 
     private BottomNavigationView mNavView;
 
@@ -40,6 +41,8 @@ public class MainActivity extends BaseActivity implements NavController.OnDestin
         mNavView = findViewById(R.id.bottom_navigation_view);
         // 设置NavigationUI.setupWithNavController后，此处监听无效
         // mNavView.setOnNavigationItemSelectedListener(this);
+
+        mNavView.setOnNavigationItemReselectedListener(this);
 
         Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
         if (navHostFragment != null) {
@@ -80,5 +83,10 @@ public class MainActivity extends BaseActivity implements NavController.OnDestin
         if (destination.getId() == R.id.navigation_message) {
             removeMessageBadge();
         }
+    }
+
+    @Override
+    public void onNavigationItemReselected(@NonNull MenuItem item) {
+        // 拦截重复点击处理，如果不拦截，则会交由系统默认处理，刷新页面。
     }
 }
