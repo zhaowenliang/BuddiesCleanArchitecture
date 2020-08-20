@@ -64,7 +64,7 @@
                 style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_cache_manage_label"
+                android:text="@string/settings_manage_space_label"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/text_cache_manager_arrow"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"

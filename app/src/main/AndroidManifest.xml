@@ -9,6 +9,7 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:manageSpaceActivity=".person.activity.ManageSpaceActivity"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -46,6 +47,12 @@
 
         <!-- 设置页 -->
         <activity android:name=".person.activity.SettingsActivity" />
+
+        <activity android:name=".person.activity.PersonInfoActivity" />
+
+        <activity android:name=".person.activity.AboutUsActivity" />
+
+        <activity android:name=".person.activity.ManageSpaceActivity" />
 
     </application>
 

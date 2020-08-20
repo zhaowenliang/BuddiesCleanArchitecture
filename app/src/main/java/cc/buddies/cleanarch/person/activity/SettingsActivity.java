@@ -16,7 +16,7 @@ public class SettingsActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        setTitle(R.string.settings_title);
+        setTitle(R.string.settings_label);
 
         initView();
     }
@@ -30,7 +30,7 @@ public class SettingsActivity extends BaseActivity {
         findViewById(R.id.panel_person_info).setOnClickListener(v ->
                 ToastUtils.shortToast(this, R.string.settings_person_info_label));
         findViewById(R.id.panel_cache_mange).setOnClickListener(v ->
-                ToastUtils.shortToast(this, R.string.settings_cache_manage_label));
+                ToastUtils.shortToast(this, R.string.settings_manage_space_label));
         findViewById(R.id.panel_about_us).setOnClickListener(v ->
                 ToastUtils.shortToast(this, R.string.settings_about_us_label));
         findViewById(R.id.text_logout_label).setOnClickListener(v ->

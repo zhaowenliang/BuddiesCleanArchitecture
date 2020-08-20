@@ -13,13 +13,15 @@
     <string name="person_follow_label">关注</string>
     <string name="person_fans_label">粉丝</string>
 
-    <string name="settings_title">设置</string>
-
+    <string name="settings_label">设置</string>
     <string name="settings_person_info_label">个人信息</string>
-    <string name="settings_cache_manage_label">缓存管理</string>
+    <string name="settings_manage_space_label">空间管理</string>
     <string name="settings_about_us_label">关于我们</string>
     <string name="settings_logout_label">退出登录</string>
     <string name="settings_version_info">Clean Arch Version %1$s</string>
+
+    <string name="login_label">登录</string>
+    <string name="register_label">注册</string>
 
     <string name="image_content_description">图片</string>
 

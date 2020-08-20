@@ -47,6 +47,9 @@ dependencies {
     implementation "androidx.room:room-runtime:${androidx_room_version}"
     annotationProcessor "androidx.room:room-compiler:${androidx_room_version}"
 
+    implementation "commons-io:commons-io:${commons_io_version}"  // apache io 工具库
+    implementation "commons-codec:commons-codec:${commons_codec_version}"  // apache 消息摘要/字符编解码处理 工具库
+
     // 个人仓库，已发布到JitPack
     implementation "com.github.zhaowenliang.BuddiesComponent:network:${buddies_component_version}"
     implementation "com.github.zhaowenliang.BuddiesComponent:storage:${buddies_component_version}"
