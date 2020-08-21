@@ -12,10 +12,10 @@ import androidx.navigation.Navigation;
 import com.google.android.material.snackbar.Snackbar;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.common.base.BaseNavigateFragment;
+import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.login.viewmodel.LoginViewModel;
 
-public class LoginFragment extends BaseNavigateFragment {
+public class LoginFragment extends BaseFragment {
 
     private LoginViewModel mLoginViewModel;
 

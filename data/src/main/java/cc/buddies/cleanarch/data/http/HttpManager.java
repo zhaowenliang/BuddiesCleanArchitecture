@@ -2,12 +2,15 @@ package cc.buddies.cleanarch.data.http;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import cc.buddies.cleanarch.data.http.Interceptor.HttpCacheInterceptor;
 import cc.buddies.cleanarch.data.http.Interceptor.ResponseModelInterceptor;
+import cc.buddies.cleanarch.data.serialize.JSONUtils;
 import cc.buddies.component.network.interceptor.HttpEncryptInterceptor;
 import cc.buddies.component.network.interceptor.HttpLoggingInterceptor;
 import cc.buddies.component.storage.StorageUtils;
@@ -97,10 +100,12 @@ public class HttpManager {
      * @return Retrofit.Builder
      */
     private synchronized Retrofit.Builder createRetrofitBuilder(OkHttpClient httpClient) {
+        Gson gson = JSONUtils.GSONInstance.GSON;
+
         return new Retrofit.Builder()
                 .baseUrl("https://v.juhe.cn/toutiao/")
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .client(httpClient);
     }

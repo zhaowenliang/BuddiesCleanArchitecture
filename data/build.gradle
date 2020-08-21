@@ -42,6 +42,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
     implementation "androidx.annotation:annotation:${androidx_annotation_version}"
     implementation "io.reactivex.rxjava3:rxjava:${reactivex_rxjava_version}"
     implementation "io.reactivex.rxjava3:rxandroid:${reactivex_rxandroid_version}"

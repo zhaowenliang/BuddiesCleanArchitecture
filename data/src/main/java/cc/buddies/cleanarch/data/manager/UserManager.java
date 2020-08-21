@@ -1,13 +1,12 @@
 package cc.buddies.cleanarch.data.manager;
 
-import android.text.TextUtils;
-import android.util.Log;
-
 import cc.buddies.cleanarch.data.preference.UserPreference;
+import cc.buddies.cleanarch.data.serialize.JSONUtils;
+import cc.buddies.cleanarch.domain.model.UserModel;
 
 public class UserManager {
 
-    private String userInfo;
+    private UserModel user;
 
     private UserManager() {
     }
@@ -21,28 +20,29 @@ public class UserManager {
     }
 
     public boolean isLogin() {
-        return !TextUtils.isEmpty(getUserInfo());
+        return getUserInfo() != null;
     }
 
-    public boolean saveUserInfo(String user) {
+    public void saveUserInfo(UserModel user) {
         try {
-            UserPreference userPreference = new UserPreference();
-            userPreference.saveUserInfo(user);
+            this.user = user;
+            String s = JSONUtils.toJSON(user);
 
-            this.userInfo = user;
-            return true;
+            UserPreference userPreference = new UserPreference();
+            userPreference.saveUserInfo(s);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
     }
 
-    public String getUserInfo() {
-        if (userInfo == null) {
+    public UserModel getUserInfo() {
+        if (user == null) {
             UserPreference userPreference = new UserPreference();
-            userInfo = userPreference.getUserInfo();
+            String userInfo = userPreference.getUserInfo();
+
+            this.user = JSONUtils.toBean(userInfo, UserModel.class);
         }
-        return userInfo;
+        return user;
     }
 
 }

@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import androidx.room.rxjava3.EmptyResultSetException;
 
-import org.apache.commons.codec.digest.Md5Crypt;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.List;
 
@@ -25,11 +25,34 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class UserRepositoryImpl implements UserRepository {
 
+    // 用户token生成器
     private static class UserTokenGenerator {
         static String generate() {
             String key = String.valueOf(System.currentTimeMillis());
-            return Md5Crypt.md5Crypt(key.getBytes());
+            return DigestUtils.md5Hex(key);
         }
+    }
+
+    // 密码加密
+    private String encryptPassword(String password) {
+        if (TextUtils.isEmpty(password)) return password;
+        return DigestUtils.md5Hex(password.getBytes());
+    }
+
+    // 生成默认用户昵称
+    private String generateNickname(String account) {
+        return account;
+    }
+
+    // 转化数据实体为响应数据模型
+    private UserModel transEntityToModel(UserEntity entity) {
+        UserModel userModel = new UserModel();
+        userModel.setAccount(entity.account);
+        userModel.setToken(entity.token);
+        userModel.setNickname(entity.nickname);
+        userModel.setAvatar(entity.avatar);
+        userModel.setUid(entity.id);
+        return userModel;
     }
 
     @Override
@@ -52,15 +75,7 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 })
                 // 转化响应数据
-                .map(userEntity -> {
-                    UserModel userModel = new UserModel();
-                    userModel.setAccount(userEntity.account);
-                    userModel.setToken(userEntity.token);
-                    userModel.setNickname(userEntity.nickname);
-                    userModel.setAvatar(userEntity.avatar);
-                    userModel.setUid(userEntity.id);
-                    return userModel;
-                });
+                .map(this::transEntityToModel);
     }
 
     @Override
@@ -98,6 +113,11 @@ public class UserRepositoryImpl implements UserRepository {
 
                     entity.token = UserTokenGenerator.generate();
 
+                    // 生成默认昵称
+                    if (entity.nickname == null || entity.nickname.length() == 0) {
+                        entity.nickname = generateNickname(entity.account);
+                    }
+
                     return userDao.insertUser(entity);
                 })
                 // 查询新用户数据
@@ -111,18 +131,7 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 })
                 // 返回注册结果
-                .map(userEntities -> {
-                    UserEntity userEntity = userEntities.get(0);
-
-                    UserModel result = new UserModel();
-                    result.setUid(userEntity.id);
-                    result.setAccount(userEntity.account);
-                    result.setNickname(userEntity.nickname);
-                    result.setAvatar(userEntity.account);
-                    result.setToken(userEntity.token);
-
-                    return result;
-                });
+                .map(userEntities -> transEntityToModel(userEntities.get(0)));
     }
 
     @Override
@@ -138,12 +147,6 @@ public class UserRepositoryImpl implements UserRepository {
                         return Completable.error(new ResponseException(accountExists.getCode(), accountExists.getMessage()));
                     }
                 });
-    }
-
-    // 密码加密
-    private String encryptPassword(String password) {
-        if (TextUtils.isEmpty(password)) return password;
-        return Md5Crypt.md5Crypt(password.getBytes());
     }
 
 }

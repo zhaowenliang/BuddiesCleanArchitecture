@@ -9,7 +9,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import cc.buddies.cleanarch.common.base.BaseActivity;
-import cc.buddies.cleanarch.data.manager.UserManager;
 
 public class MainActivity extends BaseActivity {
 
@@ -22,8 +21,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        UserManager.getInstance().saveUserInfo(null);
 
         View containerView = findViewById(R.id.fragment_container_view);
 

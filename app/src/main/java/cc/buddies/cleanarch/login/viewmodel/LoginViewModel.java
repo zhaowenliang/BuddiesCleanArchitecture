@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import cc.buddies.cleanarch.common.base.BaseViewModel;
 import cc.buddies.cleanarch.common.result.DataResult;
 import cc.buddies.cleanarch.data.manager.UserManager;
-import cc.buddies.cleanarch.data.serialize.JSONUtils;
 import cc.buddies.cleanarch.data.service.UserRepositoryImpl;
 import cc.buddies.cleanarch.domain.interactor.LoginUseCase;
 import cc.buddies.cleanarch.domain.repository.UserRepository;
@@ -33,7 +32,7 @@ public class LoginViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userModel -> {
-                    UserManager.getInstance().saveUserInfo(JSONUtils.toJSON(userModel));
+                    UserManager.getInstance().saveUserInfo(userModel);
                     authenticationState.setValue(DataResult.result(true));
                 }, throwable -> {
                     authenticationState.setValue(DataResult.error(throwable));

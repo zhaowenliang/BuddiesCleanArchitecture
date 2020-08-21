@@ -5,10 +5,10 @@
     android:id="@+id/settings_navigation"
     app:startDestination="@id/navigation_settings">
 
-    <activity
+    <fragment
         android:id="@+id/navigation_settings"
-        android:name="cc.buddies.cleanarch.person.activity.SettingsActivity"
+        android:name="cc.buddies.cleanarch.person.fragment.SettingsFragment"
         android:label="@string/settings_label"
-        tools:layout="@layout/activity_settings" />
+        tools:layout="@layout/fragment_settings" />
 
 </navigation>

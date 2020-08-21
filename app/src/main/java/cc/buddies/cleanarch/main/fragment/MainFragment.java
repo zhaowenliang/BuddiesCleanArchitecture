@@ -1,7 +1,6 @@
 package cc.buddies.cleanarch.main.fragment;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Random;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.common.base.BaseNavigateFragment;
 import cc.buddies.cleanarch.data.manager.UserManager;
 

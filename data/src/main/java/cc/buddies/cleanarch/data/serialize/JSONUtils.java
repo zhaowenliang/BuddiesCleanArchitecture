@@ -3,6 +3,7 @@ package cc.buddies.cleanarch.data.serialize;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class JSONUtils {
 
     public static class GSONInstance {
-        public static final Gson GSON = new Gson();
+        public static final Gson GSON = new GsonBuilder().serializeNulls().create();
     }
 
     public static boolean isJSON(String text) {
@@ -73,6 +74,7 @@ public class JSONUtils {
      */
     @NonNull
     public static String toJSON(Object object) {
+        if (object == null) return "";
         return GSONInstance.GSON.toJson(object);
     }
 

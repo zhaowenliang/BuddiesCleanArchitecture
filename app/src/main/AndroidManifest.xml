@@ -45,9 +45,6 @@
             </intent-filter>
         </activity>
 
-        <!-- 设置页 -->
-        <activity android:name=".person.activity.SettingsActivity" />
-
         <activity android:name=".person.activity.PersonInfoActivity" />
 
         <activity android:name=".person.activity.AboutUsActivity" />
