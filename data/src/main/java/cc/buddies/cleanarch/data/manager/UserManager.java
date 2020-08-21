@@ -1,5 +1,8 @@
 package cc.buddies.cleanarch.data.manager;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import cc.buddies.cleanarch.data.preference.UserPreference;
 
 public class UserManager {
@@ -18,12 +21,7 @@ public class UserManager {
     }
 
     public boolean isLogin() {
-        if (userInfo != null) {
-            return true;
-        } else {
-            UserPreference userPreference = new UserPreference();
-            return userPreference.getUserInfo() != null;
-        }
+        return !TextUtils.isEmpty(getUserInfo());
     }
 
     public boolean saveUserInfo(String user) {
@@ -40,12 +38,11 @@ public class UserManager {
     }
 
     public String getUserInfo() {
-        if (userInfo != null) {
-            return userInfo;
-        } else {
+        if (userInfo == null) {
             UserPreference userPreference = new UserPreference();
-            return userPreference.getUserInfo();
+            userInfo = userPreference.getUserInfo();
         }
+        return userInfo;
     }
 
 }

@@ -27,7 +27,7 @@
 
         <!-- 主页 -->
         <activity
-            android:name=".main.activity.MainActivity"
+            android:name=".MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="${applicationId}.intent.action.HOME" />

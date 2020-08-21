@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_navigation"
+    app:startDestination="@id/navigation_main_fragment">
+
+    <fragment
+        android:id="@+id/navigation_main_fragment"
+        android:name="cc.buddies.cleanarch.main.fragment.MainFragment"
+        android:label="@string/main_navigation"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_to_login_navigation"
+            app:destination="@id/login_navigation" />
+
+        <action
+            android:id="@+id/action_to_main_navigation"
+            app:destination="@id/main_navigation" />
+
+        <action
+            android:id="@+id/action_to_settings_navigation"
+            app:destination="@id/settings_navigation" />
+
+    </fragment>
+
+    <!-- 登录页 导航图 -->
+    <include app:graph="@navigation/login_navigation" />
+
+    <!-- 主页 导航图 -->
+    <include app:graph="@navigation/main_navigation" />
+
+    <!-- 设置页 导航图 -->
+    <include app:graph="@navigation/settings_navigation" />
+
+</navigation>

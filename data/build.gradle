@@ -12,6 +12,15 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
 
     buildTypes {
@@ -44,7 +53,10 @@ dependencies {
 
     implementation "com.google.code.gson:gson:${google_gson_version}"
 
+    implementation "androidx.lifecycle:lifecycle-livedata:${androidx_lifecycle_livedata_version}"
+
     implementation "androidx.room:room-runtime:${androidx_room_version}"
+    implementation "androidx.room:room-rxjava3:${androidx_room_version}"
     annotationProcessor "androidx.room:room-compiler:${androidx_room_version}"
 
     implementation "commons-io:commons-io:${commons_io_version}"  // apache io 工具库

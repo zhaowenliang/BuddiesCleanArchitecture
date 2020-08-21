@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.login.activity.LoginActivity;
-import cc.buddies.cleanarch.main.activity.MainActivity;
+import cc.buddies.cleanarch.MainActivity;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">清洁架构</string>
 
+    <string name="main_navigation">主页</string>
     <string name="main_navigation_home">首页</string>
     <string name="main_navigation_square">广场</string>
     <string name="main_navigation_message">消息</string>

@@ -9,12 +9,18 @@
         android:id="@+id/navigation_login"
         android:name="cc.buddies.cleanarch.login.fragment.LoginFragment"
         android:label="@string/login_label"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_to_register"
+            app:destination="@id/navigation_register" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_register"
         android:name="cc.buddies.cleanarch.login.fragment.RegisterFragment"
         android:label="@string/register_label"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_register" />
 
 </navigation>

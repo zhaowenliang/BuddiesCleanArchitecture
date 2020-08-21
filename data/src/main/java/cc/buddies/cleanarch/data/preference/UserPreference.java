@@ -22,8 +22,11 @@ public class UserPreference extends BasePreferences implements UserPreferenceCon
     }
 
     public void saveUserInfo(String user) throws Exception {
-        String encryptBase64CBC = AESUtils.encryptBase64CBC(user.getBytes(), EncryptConstants.AES_KEY.getBytes(), EncryptConstants.AES_IV.getBytes());
-        getSharedPreferences().edit().putString(KEY_USER_INFO, encryptBase64CBC).apply();
+        String encryptData = null;
+        if (user != null) {
+            encryptData = AESUtils.encryptBase64CBC(user.getBytes(), EncryptConstants.AES_KEY.getBytes(), EncryptConstants.AES_IV.getBytes());
+        }
+        getSharedPreferences().edit().putString(KEY_USER_INFO, encryptData).apply();
     }
 
     @Nullable

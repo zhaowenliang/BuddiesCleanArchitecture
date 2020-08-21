@@ -1,7 +1,8 @@
-package cc.buddies.cleanarch.main.activity;
+package cc.buddies.cleanarch.main.fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,34 +18,38 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.Random;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.common.base.BaseActivity;
+import cc.buddies.cleanarch.common.base.BaseFragment;
+import cc.buddies.cleanarch.common.base.BaseNavigateFragment;
+import cc.buddies.cleanarch.data.manager.UserManager;
 
-public class MainActivity extends BaseActivity implements NavController.OnDestinationChangedListener, BottomNavigationView.OnNavigationItemReselectedListener {
+public class MainFragment extends BaseNavigateFragment implements NavController.OnDestinationChangedListener {
 
     private BottomNavigationView mNavView;
 
-    @Override
-    protected boolean useCommonLayout() {
-        return false;
+    public MainFragment() {
+        this(R.layout.fragment_main);
+    }
+
+    public MainFragment(int contentLayoutId) {
+        super(contentLayoutId);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initNavigation(view);
+    }
 
-        initNavigation();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         fillData();
     }
 
-    private void initNavigation() {
-        mNavView = findViewById(R.id.bottom_navigation_view);
-        // 设置NavigationUI.setupWithNavController后，此处监听无效
-        // mNavView.setOnNavigationItemSelectedListener(this);
+    private void initNavigation(@NonNull View view) {
+        mNavView = view.findViewById(R.id.bottom_navigation_view);
 
-        mNavView.setOnNavigationItemReselectedListener(this);
-
-        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
+        Fragment navHostFragment = getChildFragmentManager().findFragmentById(R.id.fragment_container_view);
         if (navHostFragment != null) {
             NavController navController = NavHostFragment.findNavController(navHostFragment);
             NavigationUI.setupWithNavController(mNavView, navController);
@@ -56,7 +61,22 @@ public class MainActivity extends BaseActivity implements NavController.OnDestin
 //            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
             navController.addOnDestinationChangedListener(this);
+
+            mNavView.setOnNavigationItemSelectedListener(item -> {
+                if (item.getItemId() == R.id.navigation_message || item.getItemId() == R.id.navigation_mine) {
+                    if (!UserManager.getInstance().isLogin()) {
+                        mainViewModel.navigationLogin(requireActivity());
+                        return false;
+                    }
+                }
+
+                return NavigationUI.onNavDestinationSelected(item, navController);
+            });
         }
+
+        mNavView.setOnNavigationItemReselectedListener(item -> {
+            // 拦截重复点击处理，如果不拦截，则会交由系统默认处理，刷新页面。
+        });
     }
 
     private void setMessageBadge(int number) {
@@ -85,8 +105,4 @@ public class MainActivity extends BaseActivity implements NavController.OnDestin
         }
     }
 
-    @Override
-    public void onNavigationItemReselected(@NonNull MenuItem item) {
-        // 拦截重复点击处理，如果不拦截，则会交由系统默认处理，刷新页面。
-    }
 }

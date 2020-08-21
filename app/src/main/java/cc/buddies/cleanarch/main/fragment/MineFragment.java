@@ -6,14 +6,14 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import cc.buddies.cleanarch.R;
+import cc.buddies.cleanarch.common.base.BaseNavigateFragment;
 import cc.buddies.component.common.helper.StatusBarHelper;
 import cc.buddies.component.common.utils.ToastUtils;
 
-public class MineFragment extends Fragment {
+public class MineFragment extends BaseNavigateFragment {
 
     public MineFragment() {
         this(R.layout.fragment_mine);
@@ -44,7 +44,7 @@ public class MineFragment extends Fragment {
         view.findViewById(R.id.panel_follow).setOnClickListener(v -> ToastUtils.shortToast(requireContext(), R.string.person_follow_label));
         view.findViewById(R.id.panel_fans).setOnClickListener(v -> ToastUtils.shortToast(requireContext(), R.string.person_fans_label));
 
-        view.findViewById(R.id.image_button_setting).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_to_settings));
+        view.findViewById(R.id.image_button_setting).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_to_settings_navigation));
 
 //        view.findViewById(R.id.image_button_setting).setOnClickListener(v -> {
 //            Navigation.findNavController(v).navigate(R.id.action_to_settings);
