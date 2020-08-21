@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch;
+package cc.buddies.cleanarch.main.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +19,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Random;
 
+import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.data.manager.UserManager;
+import cc.buddies.cleanarch.main.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity implements NavController.OnDestinationChangedListener {
 
@@ -59,12 +61,6 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
         if (navHostFragment != null) {
             NavController navController = NavHostFragment.findNavController(navHostFragment);
             NavigationUI.setupWithNavController(mNavView, navController);
-
-            // 如果没有设置ActionBar标题栏，则不需要设置此项
-//            AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//                    R.id.navigation_home, R.id.navigation_square, R.id.navigation_message, R.id.navigation_mine)
-//                    .build();
-//            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
             navController.addOnDestinationChangedListener(this);
 

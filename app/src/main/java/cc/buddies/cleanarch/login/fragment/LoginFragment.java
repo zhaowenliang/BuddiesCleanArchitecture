@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -36,7 +37,7 @@ public class LoginFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.mLoginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+        this.mLoginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         this.mLoginViewModel.authenticationState.observe(getViewLifecycleOwner(), authenticationStateDataResult -> {
             if (authenticationStateDataResult.throwable != null) {
@@ -48,7 +49,7 @@ public class LoginFragment extends BaseFragment {
             }
 
             if (authenticationStateDataResult.data) {
-                Navigation.findNavController(requireView()).navigateUp();
+                NavHostFragment.findNavController(this).navigateUp();
             }
         });
     }

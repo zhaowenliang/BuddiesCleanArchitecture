@@ -2,6 +2,7 @@ package cc.buddies.cleanarch.splash.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
@@ -9,9 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
+import cc.buddies.cleanarch.main.activity.MainActivity;
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.login.activity.LoginActivity;
-import cc.buddies.cleanarch.MainActivity;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
         this.mCompositeDisposable.add(createLoginCompletable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::startMain, throwable -> startLogin()));
+                .subscribe(this::startMain, throwable -> Log.e("启动页", "初始化失败")));
     }
 
     // 创建登录被观察者
@@ -61,13 +61,6 @@ public class SplashActivity extends AppCompatActivity {
         // do something, waiting until finish.
 
         this.waitTime = System.currentTimeMillis() - beforeTime;
-    }
-
-    private void startLogin() {
-        this.mCompositeDisposable.add(Completable
-                .timer(getDelayTime(), TimeUnit.MILLISECONDS)
-                .doAfterTerminate(this::finish)
-                .subscribe(() -> startActivity(new Intent(SplashActivity.this, LoginActivity.class))));
     }
 
     private void startMain() {

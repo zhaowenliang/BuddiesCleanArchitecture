@@ -2,6 +2,7 @@ package cc.buddies.cleanarch.main.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cc.buddies.cleanarch.R;
+import cc.buddies.cleanarch.data.manager.UserManager;
 
 public class SquareFragment extends Fragment {
 
@@ -34,5 +36,13 @@ public class SquareFragment extends Fragment {
                             Toast.makeText(v.getContext(), "123", Toast.LENGTH_SHORT).show())
                     .show();
         });
+
+        TextView textWelcome = view.findViewById(R.id.test_text_view);
+        if (UserManager.getInstance().isLogin()) {
+            textWelcome.setText(UserManager.getInstance().getUserInfo().getNickname());
+        } else {
+            textWelcome.setText("用户未登录");
+        }
     }
+
 }

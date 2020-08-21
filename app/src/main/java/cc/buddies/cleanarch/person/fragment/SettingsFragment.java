@@ -66,7 +66,7 @@ public class SettingsFragment extends Fragment {
                 ToastUtils.shortToast(requireContext(), R.string.settings_about_us_label));
         view.findViewById(R.id.text_logout_label).setOnClickListener(v -> {
             UserManager.getInstance().saveUserInfo(null);
-            Navigation.findNavController(v).navigateUp();
+            Navigation.findNavController(v).navigate(R.id.action_popup_main);
         });
     }
 }

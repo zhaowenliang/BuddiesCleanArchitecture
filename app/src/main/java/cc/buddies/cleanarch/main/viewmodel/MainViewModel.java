@@ -1,4 +1,4 @@
-package cc.buddies.cleanarch;
+package cc.buddies.cleanarch.main.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 

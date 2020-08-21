@@ -9,6 +9,15 @@
         android:id="@+id/navigation_settings"
         android:name="cc.buddies.cleanarch.person.fragment.SettingsFragment"
         android:label="@string/settings_label"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+
+        <!-- 重新导航到主页，重建主页 -->
+        <action
+            android:id="@+id/action_popup_main"
+            app:destination="@id/main_navigation"
+            app:popUpTo="@id/main_navigation"
+            app:popUpToInclusive="false" />
+
+    </fragment>
 
 </navigation>
