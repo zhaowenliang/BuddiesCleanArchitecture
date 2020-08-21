@@ -27,6 +27,32 @@
         android:id="@+id/navigation_mine"
         android:name="cc.buddies.cleanarch.main.fragment.MineFragment"
         android:label="@string/main_navigation_mine"
-        tools:layout="@layout/fragment_mine" />
+        tools:layout="@layout/fragment_mine">
+
+        <!-- 导航 设置 -->
+        <action
+            android:id="@+id/action_to_settings"
+            app:destination="@id/settings_navigation"
+            app:enterAnim="@anim/custom_activity_open_enter"
+            app:exitAnim="@anim/custom_activity_open_exit"
+            app:popEnterAnim="@anim/custom_activity_close_enter"
+            app:popExitAnim="@anim/custom_activity_close_exit"/>
+
+    </fragment>
+
+    <!-- 导航 登录 -->
+    <action
+        android:id="@+id/action_to_login"
+        app:destination="@id/login_navigation"
+        app:enterAnim="@anim/custom_activity_open_enter"
+        app:exitAnim="@anim/custom_activity_open_exit"
+        app:popEnterAnim="@anim/custom_activity_close_enter"
+        app:popExitAnim="@anim/custom_activity_close_exit"/>
+
+    <!-- 登录页 导航图 -->
+    <include app:graph="@navigation/login_navigation" />
+
+    <!-- 设置页 导航图 -->
+    <include app:graph="@navigation/settings_navigation" />
 
 </navigation>

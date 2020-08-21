@@ -11,10 +11,13 @@
         android:background="@color/message_background_color"
         android:orientation="vertical">
 
+        <include layout="@layout/layout_appbar_dark" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/panel_person_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="?attr/colorSurface"
             android:foreground="?attr/selectableItemBackground"
             android:paddingStart="16dp"

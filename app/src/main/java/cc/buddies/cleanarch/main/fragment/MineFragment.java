@@ -7,15 +7,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.Navigation;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.common.base.BaseNavigateFragment;
+import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.data.manager.UserManager;
 import cc.buddies.cleanarch.domain.model.UserModel;
 import cc.buddies.component.common.helper.StatusBarHelper;
 import cc.buddies.component.common.utils.ToastUtils;
 
-public class MineFragment extends BaseNavigateFragment {
+public class MineFragment extends BaseFragment {
 
     private TextView mTextNickname;
 
@@ -63,12 +64,7 @@ public class MineFragment extends BaseNavigateFragment {
         view.findViewById(R.id.panel_follow).setOnClickListener(v -> ToastUtils.shortToast(requireContext(), R.string.person_follow_label));
         view.findViewById(R.id.panel_fans).setOnClickListener(v -> ToastUtils.shortToast(requireContext(), R.string.person_fans_label));
 
-        // 使用Navigation.createNavigateOnClickListener创建响应时间，会在当前View所在最近的Fragment容器内寻找Action，
-        // 但是当前意图为在主页主容器内导航，所以只能指定View寻找NavController。
-        // view.findViewById(R.id.image_button_setting).setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_to_settings_navigation));
-
-        view.findViewById(R.id.image_button_setting).setOnClickListener(v -> {
-            navigate().navigate(R.id.action_to_settings_navigation);
-        });
+        view.findViewById(R.id.image_button_setting).setOnClickListener(
+                Navigation.createNavigateOnClickListener(R.id.action_to_settings));
     }
 }

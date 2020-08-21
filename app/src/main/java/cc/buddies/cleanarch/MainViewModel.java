@@ -1,21 +1,16 @@
 package cc.buddies.cleanarch;
 
-import android.app.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.lifecycle.MutableLiveData;
 
 import cc.buddies.cleanarch.common.base.BaseViewModel;
 
 public class MainViewModel extends BaseViewModel {
 
-    public NavController mainNavController(@NonNull Activity activity) {
-        return Navigation.findNavController(activity, R.id.fragment_container_view);
-    }
+    public MutableLiveData<Boolean> isMainSceneLiveData = new MutableLiveData<>();
 
-    public void navigationLogin(@NonNull Activity activity) {
-        mainNavController(activity).navigate(R.id.action_to_login_navigation);
+    // 更新当前是否时主页场景（隐藏/显示底部导航栏）
+    public void notifyMainScene(boolean isMainScene) {
+        this.isMainSceneLiveData.setValue(isMainScene);
     }
 
 }
