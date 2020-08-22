@@ -18,6 +18,34 @@
             app:popUpTo="@id/main_navigation"
             app:popUpToInclusive="false" />
 
+        <action
+            android:id="@+id/action_to_person_info"
+            app:destination="@id/navigation_person_info"
+            app:enterAnim="@anim/custom_activity_open_enter"
+            app:exitAnim="@anim/custom_activity_open_exit"
+            app:popEnterAnim="@anim/custom_activity_close_enter"
+            app:popExitAnim="@anim/custom_activity_close_exit"/>
+
+        <action
+            android:id="@+id/action_to_about_us"
+            app:destination="@id/navigation_about_us"
+            app:enterAnim="@anim/custom_activity_open_enter"
+            app:exitAnim="@anim/custom_activity_open_exit"
+            app:popEnterAnim="@anim/custom_activity_close_enter"
+            app:popExitAnim="@anim/custom_activity_close_exit"/>
+
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_person_info"
+        android:name="cc.buddies.cleanarch.person.fragment.PersonInfoFragment"
+        android:label="@string/settings_person_info_label"
+        tools:layout="@layout/fragment_person_info" />
+
+    <fragment
+        android:id="@+id/navigation_about_us"
+        android:name="cc.buddies.cleanarch.person.fragment.AboutUsFragment"
+        android:label="@string/settings_about_us_label"
+        tools:layout="@layout/fragment_about_us" />
 
 </navigation>

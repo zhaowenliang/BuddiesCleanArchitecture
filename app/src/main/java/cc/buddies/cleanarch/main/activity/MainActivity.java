@@ -22,6 +22,7 @@ import java.util.Random;
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.data.manager.UserManager;
 import cc.buddies.cleanarch.main.viewmodel.MainViewModel;
+import cc.buddies.component.common.helper.StatusBarHelper;
 
 public class MainActivity extends AppCompatActivity implements NavController.OnDestinationChangedListener {
 
@@ -45,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
         initViewModel();
         initNavigation();
         fillData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatusBarHelper.translucentStatusBar(this, false);
     }
 
     private void initViewModel() {

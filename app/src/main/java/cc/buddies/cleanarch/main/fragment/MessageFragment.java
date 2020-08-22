@@ -4,7 +4,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,12 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.main.adapter.SessionsQuickAdapter;
+import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.common.helper.BadgeDrawableHelper;
-import cc.buddies.component.common.helper.StatusBarHelper;
+import cc.buddies.cleanarch.main.adapter.SessionsQuickAdapter;
 import cc.buddies.component.common.utils.DensityUtils;
 
-public class MessageFragment extends Fragment {
+public class MessageFragment extends BaseFragment {
 
     private SessionsQuickAdapter mSessionsAdapter;
 
@@ -46,6 +44,9 @@ public class MessageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fitTranslucentStatusBar(view.findViewById(R.id.panel_message_title));
+        translucentStatusBar(false);
+
         initView(view);
     }
 
@@ -53,16 +54,6 @@ public class MessageFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        TypedValue typedValue = new TypedValue();
-        requireContext().getTheme().resolveAttribute(R.attr.colorSurface, typedValue, true);
-        int color = typedValue.data;
-
-        StatusBarHelper.tintStatusBar(requireContext(), requireActivity().getWindow(), color, false);
     }
 
     private void initView(@NonNull View view) {

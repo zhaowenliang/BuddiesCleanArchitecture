@@ -2,7 +2,6 @@ package cc.buddies.cleanarch.main.fragment;
 
 import android.os.Bundle;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -18,12 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.news.fragment.NewsFragment;
+import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.main.viewmodel.HomeViewModel;
+import cc.buddies.cleanarch.news.fragment.NewsFragment;
 import cc.buddies.component.common.adapter.CommonPagerAdapter;
-import cc.buddies.component.common.helper.StatusBarHelper;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
     private HomeViewModel mHomeViewModel;
 
@@ -49,6 +48,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        translucentStatusBar(false);
         initView(view);
     }
 
@@ -58,16 +58,6 @@ public class HomeFragment extends Fragment {
         initViewModel();
         observeLiveData();
         initData();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        TypedValue typedValue = new TypedValue();
-        requireContext().getTheme().resolveAttribute(R.attr.colorSurface, typedValue, true);
-        int color = typedValue.data;
-
-        StatusBarHelper.tintStatusBar(requireContext(), requireActivity().getWindow(), color, false);
     }
 
     private void initView(@NonNull View view) {

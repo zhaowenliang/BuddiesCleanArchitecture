@@ -10,14 +10,16 @@
     <FrameLayout
         android:id="@+id/panel_message_title"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:background="?attr/colorSurface">
 
         <TextView
             android:id="@+id/tv_message_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
             android:singleLine="true"
             android:text="@string/main_navigation_message"
             android:textColor="?attr/colorOnSurface"

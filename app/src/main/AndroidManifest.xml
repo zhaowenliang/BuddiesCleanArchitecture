@@ -36,10 +36,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".person.activity.PersonInfoActivity" />
-
-        <activity android:name=".person.activity.AboutUsActivity" />
-
         <activity android:name=".person.activity.ManageSpaceActivity" />
 
     </application>

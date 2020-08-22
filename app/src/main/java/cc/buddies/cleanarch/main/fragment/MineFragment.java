@@ -1,7 +1,6 @@
 package cc.buddies.cleanarch.main.fragment;
 
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,7 +12,6 @@ import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.data.manager.UserManager;
 import cc.buddies.cleanarch.domain.model.UserModel;
-import cc.buddies.component.common.helper.StatusBarHelper;
 import cc.buddies.component.common.utils.ToastUtils;
 
 public class MineFragment extends BaseFragment {
@@ -31,6 +29,7 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        translucentStatusBar(false);
         initView(view);
     }
 
@@ -45,16 +44,6 @@ public class MineFragment extends BaseFragment {
         String nickname = userInfo != null ? userInfo.getNickname() : "";
 
         mTextNickname.setText(nickname);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        TypedValue typedValue = new TypedValue();
-        requireContext().getTheme().resolveAttribute(R.attr.colorSurface, typedValue, true);
-        int color = typedValue.data;
-
-        StatusBarHelper.tintStatusBar(requireContext(), requireActivity().getWindow(), color, false);
     }
 
     private void initView(View view) {

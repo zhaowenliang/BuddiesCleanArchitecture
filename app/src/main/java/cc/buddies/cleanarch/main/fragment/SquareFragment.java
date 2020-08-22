@@ -7,14 +7,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cc.buddies.cleanarch.R;
+import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.data.manager.UserManager;
 
-public class SquareFragment extends Fragment {
+public class SquareFragment extends BaseFragment {
 
     public SquareFragment() {
         this(R.layout.fragment_square);
@@ -27,6 +27,8 @@ public class SquareFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        translucentStatusBar(false);
+
         view.findViewById(R.id.test_button).setOnClickListener(v -> {
             MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(v.getContext());
             materialAlertDialogBuilder
