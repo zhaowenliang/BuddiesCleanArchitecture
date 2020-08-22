@@ -55,6 +55,12 @@ public class UserRepositoryImpl implements UserRepository {
         return userModel;
     }
 
+    /**
+     * 登录
+     *
+     * @param params 请求参数
+     * @return UserModel
+     */
     @Override
     public Single<UserModel> login(LoginParams params) {
         // 密码加密
@@ -78,6 +84,12 @@ public class UserRepositoryImpl implements UserRepository {
                 .map(this::transEntityToModel);
     }
 
+    /**
+     * 注册
+     *
+     * @param params 请求参数
+     * @return UserModel
+     */
     @Override
     public Single<UserModel> register(RegisterParams params) {
         // 密码加密
@@ -121,7 +133,7 @@ public class UserRepositoryImpl implements UserRepository {
                     return userDao.insertUser(entity);
                 })
                 // 查询新用户数据
-                .flatMap((Function<List<Long>, SingleSource<List<UserEntity>>>) longs -> {
+                .flatMap((Function<List<Long>, SingleSource<UserEntity>>) longs -> {
                     if (longs.isEmpty()) {
                         // 注册失败
                         ErrorEnum errorEnum = ErrorEnum.REGISTER_FAILED;
@@ -131,11 +143,17 @@ public class UserRepositoryImpl implements UserRepository {
                     }
                 })
                 // 返回注册结果
-                .map(userEntities -> transEntityToModel(userEntities.get(0)));
+                .map(this::transEntityToModel);
     }
 
+    /**
+     * 检查账号是否不存在
+     *
+     * @param account 用户账号
+     * @return 账户是否不存在
+     */
     @Override
-    public Completable checkUserExists(String account) {
+    public Completable checkAccountNoExists(String account) {
         return AppDatabase.getInstance().userDao()
                 .getUser(account)
                 .subscribeOn(Schedulers.io())
@@ -145,6 +163,82 @@ public class UserRepositoryImpl implements UserRepository {
                     } else {
                         ErrorEnum accountExists = ErrorEnum.ACCOUNT_EXISTS;
                         return Completable.error(new ResponseException(accountExists.getCode(), accountExists.getMessage()));
+                    }
+                });
+    }
+
+    /**
+     * 修改用户头像
+     *
+     * @param uid 用户id
+     * @param url 头像地址
+     * @return 头像地址
+     */
+    @Override
+    public Single<String> modifyUserAvatar(long uid, String url) {
+        return AppDatabase.getInstance().userDao()
+                .getUser(uid)
+                .subscribeOn(Schedulers.io())
+                // 查询数据为空处理
+                .onErrorResumeNext((Function<Throwable, SingleSource<UserEntity>>) throwable -> {
+                    if (throwable instanceof EmptyResultSetException) {
+                        ErrorEnum errorEnum = ErrorEnum.ACCOUNT_NOT_EXISTS;
+                        return Single.error(new ResponseException(errorEnum.getCode(), errorEnum.getMessage()));
+                    } else {
+                        return Single.error(throwable);
+                    }
+                })
+                // 更新头像
+                .flatMap((Function<UserEntity, SingleSource<Integer>>) entity -> {
+                    entity.avatar = url;
+                    return AppDatabase.getInstance().userDao()
+                            .updateUser(entity);
+                })
+                // 返回结果
+                .flatMap((Function<Integer, SingleSource<String>>) integer -> {
+                    if (integer > 0) {
+                        return Single.just(url);
+                    } else {
+                        ErrorEnum errorEnum = ErrorEnum.USER_MODIFY_FAILED;
+                        return Single.error(new ResponseException(errorEnum.getCode(), errorEnum.getMessage()));
+                    }
+                });
+    }
+
+    /**
+     * 修改用户昵称
+     *
+     * @param uid      用户id
+     * @param nickname 昵称
+     * @return 昵称
+     */
+    @Override
+    public Single<String> modifyUserNickname(long uid, String nickname) {
+        return AppDatabase.getInstance().userDao()
+                .getUser(uid)
+                .subscribeOn(Schedulers.io())
+                // 查询数据为空处理
+                .onErrorResumeNext((Function<Throwable, SingleSource<UserEntity>>) throwable -> {
+                    if (throwable instanceof EmptyResultSetException) {
+                        ErrorEnum errorEnum = ErrorEnum.ACCOUNT_NOT_EXISTS;
+                        return Single.error(new ResponseException(errorEnum.getCode(), errorEnum.getMessage()));
+                    } else {
+                        return Single.error(throwable);
+                    }
+                })
+                // 更新昵称
+                .flatMap((Function<UserEntity, SingleSource<Integer>>) entity -> {
+                    entity.nickname = nickname;
+                    return AppDatabase.getInstance().userDao()
+                            .updateUser(entity);
+                })
+                // 返回结果
+                .flatMap((Function<Integer, SingleSource<String>>) integer -> {
+                    if (integer > 0) {
+                        return Single.just(nickname);
+                    } else {
+                        ErrorEnum errorEnum = ErrorEnum.USER_MODIFY_FAILED;
+                        return Single.error(new ResponseException(errorEnum.getCode(), errorEnum.getMessage()));
                     }
                 });
     }

@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseFragment;
@@ -50,9 +53,19 @@ public class SettingsFragment extends BaseFragment {
         view.findViewById(R.id.panel_cache_mange).setOnClickListener(v ->
                 ToastUtils.shortToast(requireContext(), R.string.settings_manage_space_label));
 
-        view.findViewById(R.id.text_logout_label).setOnClickListener(v -> {
-            UserManager.getInstance().saveUserInfo(null);
-            Navigation.findNavController(v).navigate(R.id.action_popup_main);
+        view.findViewById(R.id.text_logout).setOnClickListener(v -> {
+            MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(v.getContext());
+            materialAlertDialogBuilder
+                    .setTitle("提示")
+                    .setMessage("是否要退出登录？")
+                    .setPositiveButton("确定", (dialog, which) -> logout())
+                    .setNegativeButton("取消", null)
+                    .show();
         });
+    }
+
+    private void logout() {
+        UserManager.getInstance().saveUserInfo(null);
+        NavHostFragment.findNavController(this).navigate(R.id.action_popup_main);
     }
 }

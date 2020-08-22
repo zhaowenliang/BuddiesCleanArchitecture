@@ -8,6 +8,10 @@ public enum ErrorEnum {
 
     REGISTER_FAILED(1101, "注册失败"),
 
+    ACCOUNT_NOT_EXISTS(1102, "账号不存在"),
+
+    USER_MODIFY_FAILED(1200, "用户修改失败"),
+
     ;
 
     ErrorEnum(int code, String message) {

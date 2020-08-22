@@ -3,6 +3,7 @@ package cc.buddies.cleanarch.data.db.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface UserDao {
     Single<List<UserEntity>> getUser(String account);
 
     @Query("SELECT * FROM users WHERE id=:uid")
-    Single<List<UserEntity>> getUser(long uid);
+    Single<UserEntity> getUser(long uid);
 
     // 数据不存在则插入，存在则更新 OnConflictStrategy.REPLACE
     // 默认 onConflict = OnConflictStrategy.ABORT
@@ -31,5 +32,7 @@ public interface UserDao {
     Single<List<Long>> insertUser(UserEntity... userEntities);
 
     // UPDATE/DELETE 返回的Integer值，指的是该次操作影响到的总行数
+    @Update
+    Single<Integer> updateUser(UserEntity... userEntities);
 
 }

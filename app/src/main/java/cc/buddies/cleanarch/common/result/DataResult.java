@@ -14,6 +14,10 @@ public class DataResult<T> {
         this.throwable = throwable;
     }
 
+    public static <T> DataResult<T> empty() {
+        return new DataResult<>(null, null);
+    }
+
     public static <T> DataResult<T> result(T model) {
         return new DataResult<>(model, null);
     }

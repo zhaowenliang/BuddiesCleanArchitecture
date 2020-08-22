@@ -7,16 +7,16 @@ import io.reactivex.rxjava3.core.Completable;
 /**
  * 检测用户名是否存在用例
  */
-public class CheckUserExistsUseCase implements CompletableUseCaseWithParameter<String> {
+public class CheckAccountNoExistsUseCase implements CompletableUseCaseWithParameter<String> {
 
     private UserRepository userRepository;
 
-    public CheckUserExistsUseCase(UserRepository userRepository) {
+    public CheckAccountNoExistsUseCase(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public Completable execute(String parameter) {
-        return this.userRepository.checkUserExists(parameter);
+        return this.userRepository.checkAccountNoExists(parameter);
     }
 }

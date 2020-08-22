@@ -39,8 +39,8 @@
 
             <ImageView
                 android:id="@+id/image_person_info_arrow"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:contentDescription="@string/image_content_description"
                 android:src="@drawable/setting_arrow_icon"
                 app:layout_constraintBottom_toBottomOf="@id/text_person_info_label"
@@ -76,8 +76,8 @@
 
             <ImageView
                 android:id="@+id/text_cache_manager_arrow"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:contentDescription="@string/image_content_description"
                 android:src="@drawable/setting_arrow_icon"
                 app:layout_constraintBottom_toBottomOf="@id/text_cache_manager_label"
@@ -113,8 +113,8 @@
 
             <ImageView
                 android:id="@+id/text_about_us_arrow"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:contentDescription="@string/image_content_description"
                 android:src="@drawable/setting_arrow_icon"
                 app:layout_constraintBottom_toBottomOf="@id/text_about_us_label"
@@ -125,7 +125,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/text_logout_label"
+            android:id="@+id/text_logout"
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -142,6 +142,7 @@
             android:textSize="16sp" />
 
         <TextView
+            style="@style/TextAppearance.MaterialComponents.Caption"
             android:id="@+id/text_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -150,7 +151,7 @@
             android:text="@string/settings_version_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_logout_label" />
+            app:layout_constraintTop_toBottomOf="@id/text_logout" />
 
     </LinearLayout>
 
