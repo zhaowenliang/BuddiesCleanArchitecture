@@ -1,13 +1,12 @@
 package cc.buddies.cleanarch.login.viewmodel;
 
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.MutableLiveData;
 
 import cc.buddies.cleanarch.common.base.BaseViewModel;
 import cc.buddies.cleanarch.common.result.DataResult;
-import cc.buddies.cleanarch.data.service.UserRepositoryImpl;
 import cc.buddies.cleanarch.domain.interactor.RegisterUseCase;
 import cc.buddies.cleanarch.domain.model.UserModel;
-import cc.buddies.cleanarch.domain.repository.UserRepository;
 import cc.buddies.cleanarch.domain.request.RegisterParams;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -19,9 +18,9 @@ public class RegisterViewModel extends BaseViewModel {
 
     public MutableLiveData<DataResult<UserModel>> registerLiveData = new MutableLiveData<>();
 
-    public RegisterViewModel() {
-        UserRepository userRepository = new UserRepositoryImpl();
-        this.mRegisterUseCase = new RegisterUseCase(userRepository);
+    @ViewModelInject
+    public RegisterViewModel(RegisterUseCase registerUseCase) {
+        this.mRegisterUseCase = registerUseCase;
     }
 
     public void register(RegisterParams params) {

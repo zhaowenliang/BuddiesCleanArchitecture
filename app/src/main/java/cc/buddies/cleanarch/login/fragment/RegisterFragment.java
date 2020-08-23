@@ -16,7 +16,9 @@ import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.domain.request.RegisterParams;
 import cc.buddies.cleanarch.login.viewmodel.RegisterViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class RegisterFragment extends BaseFragment {
 
     private RegisterViewModel mRegisterViewModel;

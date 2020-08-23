@@ -1,11 +1,14 @@
 package cc.buddies.cleanarch.data.service;
 
+import android.content.Context;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
 import androidx.room.rxjava3.EmptyResultSetException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import cc.buddies.cleanarch.data.db.AppDatabase;
@@ -17,6 +20,7 @@ import cc.buddies.cleanarch.domain.model.UserModel;
 import cc.buddies.cleanarch.domain.repository.UserRepository;
 import cc.buddies.cleanarch.domain.request.LoginParams;
 import cc.buddies.cleanarch.domain.request.RegisterParams;
+import cc.buddies.component.storage.provider.StorageContextProvider;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.core.SingleSource;
@@ -24,6 +28,21 @@ import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class UserRepositoryImpl implements UserRepository {
+
+    private WeakReference<Context> contextWeakReference;
+
+    public UserRepositoryImpl(Context context) {
+        this.contextWeakReference = new WeakReference<>(context);
+    }
+
+    @NonNull
+    private UserDao getUserDao() {
+        Context context = this.contextWeakReference != null
+                ? this.contextWeakReference.get()
+                : StorageContextProvider.getApplication().getApplicationContext();
+
+        return AppDatabase.getInstance(context).userDao();
+    }
 
     // 用户token生成器
     private static class UserTokenGenerator {
@@ -68,7 +87,7 @@ public class UserRepositoryImpl implements UserRepository {
         String encryptPassword = encryptPassword(password);
         params.setPassword(encryptPassword);
 
-        UserDao userDao = AppDatabase.getInstance().userDao();
+        UserDao userDao = getUserDao();
         return userDao.getUser(params.getAccount(), params.getPassword())
                 .subscribeOn(Schedulers.io())
                 // 查询数据为空处理
@@ -97,7 +116,7 @@ public class UserRepositoryImpl implements UserRepository {
         String encryptPassword = encryptPassword(password);
         params.setPassword(encryptPassword);
 
-        UserDao userDao = AppDatabase.getInstance().userDao();
+        UserDao userDao = getUserDao();
 
         return userDao.getUser(params.getAccount())
                 .subscribeOn(Schedulers.io())
@@ -154,7 +173,7 @@ public class UserRepositoryImpl implements UserRepository {
      */
     @Override
     public Completable checkAccountNoExists(String account) {
-        return AppDatabase.getInstance().userDao()
+        return getUserDao()
                 .getUser(account)
                 .subscribeOn(Schedulers.io())
                 .flatMapCompletable(userEntities -> {
@@ -176,7 +195,7 @@ public class UserRepositoryImpl implements UserRepository {
      */
     @Override
     public Single<String> modifyUserAvatar(long uid, String url) {
-        return AppDatabase.getInstance().userDao()
+        return getUserDao()
                 .getUser(uid)
                 .subscribeOn(Schedulers.io())
                 // 查询数据为空处理
@@ -191,8 +210,7 @@ public class UserRepositoryImpl implements UserRepository {
                 // 更新头像
                 .flatMap((Function<UserEntity, SingleSource<Integer>>) entity -> {
                     entity.avatar = url;
-                    return AppDatabase.getInstance().userDao()
-                            .updateUser(entity);
+                    return getUserDao().updateUser(entity);
                 })
                 // 返回结果
                 .flatMap((Function<Integer, SingleSource<String>>) integer -> {
@@ -214,7 +232,7 @@ public class UserRepositoryImpl implements UserRepository {
      */
     @Override
     public Single<String> modifyUserNickname(long uid, String nickname) {
-        return AppDatabase.getInstance().userDao()
+        return getUserDao()
                 .getUser(uid)
                 .subscribeOn(Schedulers.io())
                 // 查询数据为空处理
@@ -229,8 +247,7 @@ public class UserRepositoryImpl implements UserRepository {
                 // 更新昵称
                 .flatMap((Function<UserEntity, SingleSource<Integer>>) entity -> {
                     entity.nickname = nickname;
-                    return AppDatabase.getInstance().userDao()
-                            .updateUser(entity);
+                    return getUserDao().updateUser(entity);
                 })
                 // 返回结果
                 .flatMap((Function<Integer, SingleSource<String>>) integer -> {

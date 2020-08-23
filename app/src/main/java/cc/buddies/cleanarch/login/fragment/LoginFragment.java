@@ -15,7 +15,9 @@ import com.google.android.material.snackbar.Snackbar;
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.login.viewmodel.LoginViewModel;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class LoginFragment extends BaseFragment {
 
     private LoginViewModel mLoginViewModel;

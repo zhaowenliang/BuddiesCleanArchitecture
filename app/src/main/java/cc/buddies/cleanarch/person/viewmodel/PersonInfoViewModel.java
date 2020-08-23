@@ -1,15 +1,14 @@
 package cc.buddies.cleanarch.person.viewmodel;
 
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.MutableLiveData;
 
 import cc.buddies.cleanarch.common.base.BaseViewModel;
 import cc.buddies.cleanarch.common.result.DataResult;
 import cc.buddies.cleanarch.data.manager.UserManager;
-import cc.buddies.cleanarch.data.service.UserRepositoryImpl;
 import cc.buddies.cleanarch.domain.interactor.ModifyUserAvatarUseCase;
 import cc.buddies.cleanarch.domain.interactor.ModifyUserNicknameUseCase;
 import cc.buddies.cleanarch.domain.model.UserModel;
-import cc.buddies.cleanarch.domain.repository.UserRepository;
 import cc.buddies.cleanarch.domain.request.ModifyUserAvatarParams;
 import cc.buddies.cleanarch.domain.request.ModifyUserNicknameParams;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -24,10 +23,10 @@ public class PersonInfoViewModel extends BaseViewModel {
     private ModifyUserAvatarUseCase mModifyUserAvatarUseCase;
     private ModifyUserNicknameUseCase mModifyUserNicknameUseCase;
 
-    public PersonInfoViewModel() {
-        UserRepository userRepository = new UserRepositoryImpl();
-        this.mModifyUserAvatarUseCase = new ModifyUserAvatarUseCase(userRepository);
-        this.mModifyUserNicknameUseCase = new ModifyUserNicknameUseCase(userRepository);
+    @ViewModelInject
+    public PersonInfoViewModel(ModifyUserAvatarUseCase modifyUserAvatarUseCase, ModifyUserNicknameUseCase modifyUserNicknameUseCase) {
+        this.mModifyUserAvatarUseCase = modifyUserAvatarUseCase;
+        this.mModifyUserNicknameUseCase = modifyUserNicknameUseCase;
     }
 
     // 修改用户头像

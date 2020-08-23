@@ -8,7 +8,6 @@ import androidx.room.RoomDatabase;
 
 import cc.buddies.cleanarch.data.db.dao.UserDao;
 import cc.buddies.cleanarch.data.db.entity.UserEntity;
-import cc.buddies.component.storage.provider.StorageContextProvider;
 
 @Database(entities = {UserEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
@@ -17,9 +16,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
 
-    public static synchronized AppDatabase getInstance() {
+    public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {
-            instance = create(StorageContextProvider.getApplication().getApplicationContext());
+            instance = create(context);
         }
         return instance;
     }

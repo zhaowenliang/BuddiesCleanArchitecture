@@ -8,6 +8,7 @@ buildscript {
 
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:${goodle_dagger_hilt_version}"
     }
 }
 
@@ -16,6 +17,7 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
     }
 }
 

@@ -31,7 +31,9 @@ import cc.buddies.cleanarch.data.manager.UserManager;
 import cc.buddies.cleanarch.domain.model.UserModel;
 import cc.buddies.cleanarch.person.viewmodel.PersonInfoViewModel;
 import cc.buddies.component.common.utils.ToastUtils;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class PersonInfoFragment extends BaseFragment {
 
     private static final int REQUEST_CAMERA = 1;

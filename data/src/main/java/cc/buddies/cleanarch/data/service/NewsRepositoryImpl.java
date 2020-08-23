@@ -2,7 +2,6 @@ package cc.buddies.cleanarch.data.service;
 
 import java.util.List;
 
-import cc.buddies.cleanarch.data.http.HttpManager;
 import cc.buddies.cleanarch.data.http.function.SingleResponseModelFunction;
 import cc.buddies.cleanarch.domain.model.NewsModel;
 import cc.buddies.cleanarch.domain.repository.NewsRepository;
@@ -14,8 +13,8 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     private String apiKey;
 
-    public NewsRepositoryImpl(String apiKey) {
-        this.newsService = HttpManager.getInstance().build().create(NewsService.class);
+    public NewsRepositoryImpl(NewsService newsService, String apiKey) {
+        this.newsService = newsService;
         this.apiKey = apiKey;
     }
 

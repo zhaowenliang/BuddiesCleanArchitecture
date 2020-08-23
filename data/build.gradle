@@ -42,21 +42,26 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    // 浏览器查看Database和SharedPreference
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 
     implementation "androidx.annotation:annotation:${androidx_annotation_version}"
+    implementation "androidx.lifecycle:lifecycle-livedata:${androidx_lifecycle_livedata_version}"
+
+    // ReactiveX响应式编程
     implementation "io.reactivex.rxjava3:rxjava:${reactivex_rxjava_version}"
     implementation "io.reactivex.rxjava3:rxandroid:${reactivex_rxandroid_version}"
-    implementation "com.squareup.retrofit2:retrofit:${squareup_retrofit_version}"
 
+    // Retrofit网络请求
+    implementation "com.squareup.retrofit2:retrofit:${squareup_retrofit_version}"
     implementation "com.squareup.retrofit2:converter-scalars:${squareup_converter_scalars_version}"
     implementation "com.squareup.retrofit2:converter-gson:${squareup_converter_gson_version}"
     implementation "com.squareup.retrofit2:adapter-rxjava3:${squareup_adapter_rxjava3_version}"
 
+    // JSON
     implementation "com.google.code.gson:gson:${google_gson_version}"
 
-    implementation "androidx.lifecycle:lifecycle-livedata:${androidx_lifecycle_livedata_version}"
-
+    // Room数据库
     implementation "androidx.room:room-runtime:${androidx_room_version}"
     implementation "androidx.room:room-rxjava3:${androidx_room_version}"
     annotationProcessor "androidx.room:room-compiler:${androidx_room_version}"

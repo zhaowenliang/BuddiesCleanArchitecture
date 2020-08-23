@@ -23,7 +23,9 @@ import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.data.manager.UserManager;
 import cc.buddies.cleanarch.main.viewmodel.MainViewModel;
 import cc.buddies.component.common.helper.StatusBarHelper;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements NavController.OnDestinationChangedListener {
 
     private MainViewModel mMainViewModel;

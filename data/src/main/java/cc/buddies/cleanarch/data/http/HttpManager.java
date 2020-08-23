@@ -122,4 +122,8 @@ public class HttpManager {
         return mRetrofit;
     }
 
+    public synchronized <T> T create(final Class<T> service) {
+        return build().create(service);
+    }
+
 }

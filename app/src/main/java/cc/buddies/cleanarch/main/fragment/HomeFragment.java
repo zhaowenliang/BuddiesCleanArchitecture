@@ -40,11 +40,6 @@ public class HomeFragment extends BaseFragment {
         super(contentLayoutId);
     }
 
-    private void initViewModel() {
-        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
-        this.mHomeViewModel = viewModelProvider.get(HomeViewModel.class);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,7 +51,6 @@ public class HomeFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initViewModel();
-        observeLiveData();
         initData();
     }
 
@@ -69,7 +63,9 @@ public class HomeFragment extends BaseFragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
     }
 
-    private void observeLiveData() {
+    private void initViewModel() {
+        this.mHomeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
         this.mHomeViewModel.newsTitlesLiveData.observe(getViewLifecycleOwner(), pairs -> {
             mTitles = new ArrayList<>(pairs.size());
             mFragments.clear();

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion ANDROID_COMPILE_SDK_VERSION as int
@@ -49,15 +50,29 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:${androidx_navigation_version}"
     implementation "androidx.navigation:navigation-ui:${androidx_navigation_version}"
 
+    // ReactiveX响应式编程
     implementation "io.reactivex.rxjava3:rxjava:${reactivex_rxjava_version}"
     implementation "io.reactivex.rxjava3:rxandroid:${reactivex_rxandroid_version}"
 
+    // 加载图片
     implementation "com.github.bumptech.glide:glide:${bumptech_glide_version}"
     annotationProcessor "com.github.bumptech.glide:compiler:${bumptech_glide_version}"
 
+    // 下拉刷新/上拉加载
     implementation  "com.scwang.smart:refresh-layout-kernel:${smart_refresh_layout_version}"
     implementation  "com.scwang.smart:refresh-header-classics:${smart_refresh_layout_version}"
 
+    // Java依赖注入
+    implementation "com.google.dagger:dagger:${goodle_dagger_version}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${goodle_dagger_version}"
+    // Android依赖注入
+    implementation "com.google.dagger:hilt-android:${goodle_dagger_hilt_version}"
+    annotationProcessor "com.google.dagger:hilt-android-compiler:${goodle_dagger_hilt_version}"
+    // Android.ViewModel依赖注入
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:${androidx_hilt_viewmodel_version}"
+    annotationProcessor "androidx.hilt:hilt-compiler:${androidx_hilt_viewmodel_version}"
+
+    // RecyclerView.Adapter封装
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${cymchad_recyclerview_adapter_helper_version}"
 
     // 个人仓库，已发布到JitPack

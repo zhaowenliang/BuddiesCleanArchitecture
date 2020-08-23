@@ -18,14 +18,18 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
+import org.jetbrains.annotations.NotNull;
+
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.news.adapter.NewsQuickAdapter;
 import cc.buddies.cleanarch.common.base.BaseFragment;
-import cc.buddies.cleanarch.domain.model.NewsModel;
 import cc.buddies.cleanarch.common.helper.StateViewHelper;
+import cc.buddies.cleanarch.domain.model.NewsModel;
+import cc.buddies.cleanarch.news.adapter.NewsQuickAdapter;
 import cc.buddies.cleanarch.news.viewmodel.NewsViewModel;
 import cc.buddies.component.common.utils.DensityUtils;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class NewsFragment extends BaseFragment {
 
     private SmartRefreshLayout mSmartRefreshLayout;
@@ -44,6 +48,7 @@ public class NewsFragment extends BaseFragment {
         super(contentLayoutId);
     }
 
+    @NotNull
     public static NewsFragment newInstance(String title, String key) {
         Bundle args = new Bundle();
         args.putString("title", title);
@@ -72,16 +77,12 @@ public class NewsFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initViewModel();
-        observeLiveData();
         initData();
     }
 
     private void initViewModel() {
-        ViewModelProvider viewModelProvider = new ViewModelProvider(this);
-        this.mNewsViewModel = viewModelProvider.get(NewsViewModel.class);
-    }
+        this.mNewsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
 
-    private void observeLiveData() {
         // 获取数据结果
         this.mNewsViewModel.newsLiveData.observe(getViewLifecycleOwner(), newsModels -> {
             updateEmptyStateView();
