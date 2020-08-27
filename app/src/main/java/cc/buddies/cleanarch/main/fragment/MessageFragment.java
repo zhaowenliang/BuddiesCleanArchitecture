@@ -1,6 +1,5 @@
 package cc.buddies.cleanarch.main.fragment;
 
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +21,7 @@ import java.util.List;
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseFragment;
 import cc.buddies.cleanarch.common.helper.BadgeDrawableHelper;
+import cc.buddies.cleanarch.common.recyclerview.DividerItemDecoration;
 import cc.buddies.cleanarch.main.adapter.SessionsQuickAdapter;
 import cc.buddies.component.common.utils.DensityUtils;
 
@@ -47,7 +46,9 @@ public class MessageFragment extends BaseFragment {
         fitTranslucentStatusBar(view.findViewById(R.id.panel_message_title));
         translucentStatusBar(false);
 
-        initView(view);
+        if (savedInstanceState == null) {
+            initView(view);
+        }
     }
 
     @Override
@@ -81,21 +82,13 @@ public class MessageFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         if (recyclerView.getItemDecorationCount() == 0) {
-            int itemOffset = DensityUtils.dp2px(requireContext(), 10);
-            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), RecyclerView.VERTICAL) {
-                @Override
-                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                    super.getItemOffsets(outRect, view, parent, state);
-                    int position = parent.getChildLayoutPosition(view);
-                    RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-                    if (layoutManager != null && layoutManager.getItemCount() - 1 == position) {
-                        outRect.bottom = 0;
-                    }
-                }
-            };
+            // 自定义DividerItemDecoration，不显示最后一个分割线。
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), RecyclerView.VERTICAL);
+
             Drawable drawable = dividerItemDecoration.getDrawable();
             if (drawable != null) {
-                InsetDrawable insetDrawable = new InsetDrawable(drawable, itemOffset, 0, itemOffset, 0);
+                int inset = DensityUtils.dp2px(requireContext(), 10);
+                InsetDrawable insetDrawable = new InsetDrawable(drawable, inset, 0, inset, 0);
                 dividerItemDecoration.setDrawable(insetDrawable);
             }
 

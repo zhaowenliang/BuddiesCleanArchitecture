@@ -9,7 +9,15 @@ import cc.buddies.component.storage.crypto.AESUtils;
 import cc.buddies.component.storage.preference.BasePreferences;
 import cc.buddies.component.storage.provider.StorageContextProvider;
 
-public class UserPreference extends BasePreferences implements UserPreferenceConfig {
+public class UserPreference extends BasePreferences {
+
+    public interface Config {
+        // Preference Name
+        String SP_NAME = "user_preference";
+
+        // 用户信息
+        String KEY_USER_INFO = "user_info";
+    }
 
     @Override
     protected Context initContext() {
@@ -18,7 +26,7 @@ public class UserPreference extends BasePreferences implements UserPreferenceCon
 
     @Override
     protected String initName() {
-        return SP_NAME;
+        return Config.SP_NAME;
     }
 
     public void saveUserInfo(String user) throws Exception {
@@ -26,12 +34,12 @@ public class UserPreference extends BasePreferences implements UserPreferenceCon
         if (user != null && !"".equals(user)) {
             encryptData = AESUtils.encryptBase64CBC(user.getBytes(), EncryptConstants.AES_KEY.getBytes(), EncryptConstants.AES_IV.getBytes());
         }
-        getSharedPreferences().edit().putString(KEY_USER_INFO, encryptData).apply();
+        getSharedPreferences().edit().putString(Config.KEY_USER_INFO, encryptData).apply();
     }
 
     @Nullable
     public String getUserInfo() {
-        String user = getSharedPreferences().getString(KEY_USER_INFO, "");
+        String user = getSharedPreferences().getString(Config.KEY_USER_INFO, "");
         if (!"".equals(user)) {
             try {
                 return AESUtils.decryptBase64CBC(user, EncryptConstants.AES_KEY.getBytes(), EncryptConstants.AES_IV.getBytes());

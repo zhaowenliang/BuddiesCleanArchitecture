@@ -1,7 +1,5 @@
 package cc.buddies.cleanarch.news.viewmodel;
 
-import android.util.Log;
-
 import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.MutableLiveData;
 
@@ -25,7 +23,6 @@ public class NewsViewModel extends BaseViewModel {
     @ViewModelInject
     public NewsViewModel(GetNewsUseCase getNewsUseCase) {
         this.mGetNewsUseCase = getNewsUseCase;
-        Log.d("aaaa", "NewsViewModel getNewsUseCase hash: " + getNewsUseCase.hashCode());
     }
 
     public void fetchNews(String type) {

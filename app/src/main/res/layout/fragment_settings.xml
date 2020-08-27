@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/message_background_color"
         android:orientation="vertical">
 
         <include layout="@layout/layout_appbar_dark" />
@@ -18,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="?attr/colorSurface"
+            android:background="?attr/colorBackgroundFloating"
             android:foreground="?attr/selectableItemBackground"
             android:paddingStart="16dp"
             android:paddingTop="12dp"
@@ -54,8 +53,8 @@
             android:id="@+id/panel_cache_mange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:background="?attr/colorSurface"
+            android:layout_marginTop="0.75dp"
+            android:background="?attr/colorBackgroundFloating"
             android:foreground="?attr/selectableItemBackground"
             android:paddingStart="16dp"
             android:paddingTop="12dp"
@@ -91,8 +90,8 @@
             android:id="@+id/panel_about_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:background="?attr/colorSurface"
+            android:layout_marginTop="0.75dp"
+            android:background="?attr/colorBackgroundFloating"
             android:foreground="?attr/selectableItemBackground"
             android:paddingStart="16dp"
             android:paddingTop="12dp"
@@ -130,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="?attr/colorSurface"
+            android:background="?attr/colorBackgroundFloating"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:paddingStart="16dp"
@@ -142,8 +141,8 @@
             android:textSize="16sp" />
 
         <TextView
-            style="@style/TextAppearance.MaterialComponents.Caption"
             android:id="@+id/text_version"
+            style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

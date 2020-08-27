@@ -12,7 +12,7 @@
         android:background="?attr/actionBarItemBackground"
         android:contentDescription="@string/image_content_description"
         android:src="@drawable/setting_moon_icon"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@id/image_button_setting"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:colorBackground">#FAFAFA</item>
     </style>
 
     <!-- 启动页主题 -->
@@ -23,6 +25,7 @@
 
     <!-- 彩色标题栏弹窗菜单主题 -->
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
     <!-- ShapeableImageView 圆形样式 -->
     <style name="Widget.App.ShapeableImageView.Circle" parent="Widget.MaterialComponents.ShapeableImageView">
