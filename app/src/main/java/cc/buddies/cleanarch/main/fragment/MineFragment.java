@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseFragment;
@@ -54,7 +53,6 @@ public class MineFragment extends BaseFragment {
         Glide.with(mImageAvatar)
                 .load(avatar)
                 .error(R.drawable.setting_avatar_icon)
-                .transform(new CircleCrop())
                 .into(mImageAvatar);
     }
 

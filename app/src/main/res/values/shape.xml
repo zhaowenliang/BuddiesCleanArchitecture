@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Theme Overlay，继承自空主题，只改变指定属性的值，防止把一个主题设置在另一个主题之上，覆盖其他属性。 -->
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>
