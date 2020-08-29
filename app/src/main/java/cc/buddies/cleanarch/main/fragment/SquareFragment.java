@@ -1,20 +1,26 @@
 package cc.buddies.cleanarch.main.fragment;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseFragment;
-import cc.buddies.cleanarch.data.manager.UserManager;
+import cc.buddies.cleanarch.main.adapter.PostsPagedListAdapter;
+import cc.buddies.cleanarch.main.viewmodel.SquareViewModel;
+import cc.buddies.component.common.utils.DensityUtils;
 
 public class SquareFragment extends BaseFragment {
+
+    private SquareViewModel mSquareViewModel;
+
+    private PostsPagedListAdapter mPostsPagedListAdapter;
 
     public SquareFragment() {
         this(R.layout.fragment_square);
@@ -28,23 +34,39 @@ public class SquareFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         translucentStatusBar(false);
+        initView(view);
+    }
 
-        view.findViewById(R.id.test_button).setOnClickListener(v -> {
-            MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(v.getContext());
-            materialAlertDialogBuilder
-                    .setTitle("title")
-                    .setMessage("你好啊")
-                    .setPositiveButton("确定", (dialog, which) ->
-                            Toast.makeText(v.getContext(), "123", Toast.LENGTH_SHORT).show())
-                    .show();
-        });
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.mSquareViewModel = new ViewModelProvider(this).get(SquareViewModel.class);
 
-        TextView textWelcome = view.findViewById(R.id.test_text_view);
-        if (UserManager.getInstance().isLogin()) {
-            textWelcome.setText(UserManager.getInstance().getUserInfo().getNickname());
-        } else {
-            textWelcome.setText("用户未登录");
+        this.mSquareViewModel.postsPagedListLiveData.observe(getViewLifecycleOwner(), postEntities ->
+                mPostsPagedListAdapter.submitList(postEntities));
+    }
+
+    private void initView(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        if (recyclerView.getItemDecorationCount() != 0) {
+            int offset = DensityUtils.dp2px(requireContext(), 12);
+
+            recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                    super.getItemOffsets(outRect, view, parent, state);
+                    int position = parent.getChildLayoutPosition(view);
+
+                    int offsetTop = position == 0 ? offset : 0;
+                    outRect.set(offset, offsetTop, offset, offset);
+                }
+            });
         }
+
+        mPostsPagedListAdapter = new PostsPagedListAdapter();
+        recyclerView.setAdapter(mPostsPagedListAdapter);
     }
 
 }

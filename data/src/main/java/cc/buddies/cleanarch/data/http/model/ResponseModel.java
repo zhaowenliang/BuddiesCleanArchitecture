@@ -1,11 +1,15 @@
 package cc.buddies.cleanarch.data.http.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class ResponseModel<T> implements Serializable {
 
     private int code;
     private String message;
+
+    @SerializedName(value = "data", alternate = {"result"})
     private T data;
 
     public int getCode() {

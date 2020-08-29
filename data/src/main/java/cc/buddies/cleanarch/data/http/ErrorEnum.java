@@ -12,6 +12,8 @@ public enum ErrorEnum {
 
     USER_MODIFY_FAILED(1200, "用户修改失败"),
 
+    POST_RELEASE_FAILED(1300, "发布失败"),
+
     ;
 
     ErrorEnum(int code, String message) {
