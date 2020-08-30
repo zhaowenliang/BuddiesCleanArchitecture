@@ -1,28 +1,55 @@
 package cc.buddies.cleanarch.main.viewmodel;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import cc.buddies.cleanarch.data.db.DBDaoFactory;
+import cc.buddies.cleanarch.common.base.BaseViewModel;
+import cc.buddies.cleanarch.common.result.DataResult;
 import cc.buddies.cleanarch.data.db.dao.PostDao;
-import cc.buddies.cleanarch.data.db.relation.PostWithUser;
+import cc.buddies.cleanarch.data.db.relation.PostWithDetail;
+import cc.buddies.cleanarch.data.manager.UserManager;
+import cc.buddies.cleanarch.domain.interactor.PraisePostUseCase;
+import cc.buddies.cleanarch.domain.model.UserModel;
+import cc.buddies.cleanarch.domain.request.PraisePostParams;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class SquareViewModel extends AndroidViewModel {
+public class SquareViewModel extends BaseViewModel {
 
-    public final LiveData<PagedList<PostWithUser>> postsPagedListLiveData;
+    private PraisePostUseCase mPraisePostUseCase;
 
-    private PostDao mPostDao;
+    public final LiveData<PagedList<PostWithDetail>> postsPagedListLiveData;
 
-    public SquareViewModel(@NonNull Application application) {
-        super(application);
-        this.mPostDao = DBDaoFactory.getPostDao(application);
+    public final MutableLiveData<DataResult<Boolean>> praisePostLiveData = new MutableLiveData<>();
 
-        postsPagedListLiveData = new LivePagedListBuilder<>(mPostDao.getPostsPaging(), 20)
+    @ViewModelInject
+    public SquareViewModel(PostDao postDao, PraisePostUseCase praisePostUseCase) {
+        this.mPraisePostUseCase = praisePostUseCase;
+
+        UserModel userInfo = UserManager.getInstance().getUserInfo();
+        long uid = userInfo == null ? 0 : userInfo.getUid();
+        postsPagedListLiveData = new LivePagedListBuilder<>(postDao.getPostWithAuthorPaging(uid), 20)
                 .build();
+    }
+
+    /**
+     * 点赞/取消赞
+     *
+     * @param postId      帖子id
+     * @param addOrCancel 点赞或取消
+     */
+    public void praisePost(long postId, long userId, boolean addOrCancel) {
+        PraisePostParams clickPostGoodParams = new PraisePostParams(postId, userId, addOrCancel);
+        Disposable subscribe = mPraisePostUseCase.execute(clickPostGoodParams)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> praisePostLiveData.setValue(DataResult.result(addOrCancel)),
+                        throwable -> praisePostLiveData.setValue(DataResult.error(throwable)));
+
+        addDisposable(subscribe);
     }
 }

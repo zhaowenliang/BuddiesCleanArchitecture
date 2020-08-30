@@ -74,11 +74,15 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
             navController.addOnDestinationChangedListener(this);
 
             mNavView.setOnNavigationItemSelectedListener(item -> {
-                if (item.getItemId() == R.id.navigation_message || item.getItemId() == R.id.navigation_mine) {
-                    if (!UserManager.getInstance().isLogin()) {
-                        navController.navigate(R.id.action_to_login);
-                        return false;
-                    }
+                switch (item.getItemId()) {
+                    case R.id.navigation_square:
+                    case R.id.navigation_message:
+                    case R.id.navigation_mine:
+                        if (!UserManager.getInstance().isLogin()) {
+                            navController.navigate(R.id.action_to_login);
+                            return false;
+                        }
+                        break;
                 }
 
                 return NavigationUI.onNavDestinationSelected(item, navController);

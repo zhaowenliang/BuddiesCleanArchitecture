@@ -14,6 +14,16 @@ public enum ErrorEnum {
 
     POST_RELEASE_FAILED(1300, "发布失败"),
 
+    POST_NOT_EXISTS(1310, "帖子不存在"),
+
+    POST_ADD_PRAISE_FAILED(1320, "点赞失败"),
+
+    POST_PRAISE_ALREADY_EXISTS_FAILED(1321, "赞已存在"),
+
+    POST_CANCEL_PRAISE_FAILED(1322, "取消赞失败"),
+
+    POST_PRAISE_NOT_EXISTS_FAILED(1323, "赞不存在"),
+
     ;
 
     ErrorEnum(int code, String message) {

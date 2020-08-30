@@ -7,15 +7,20 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.common.base.BaseFragment;
+import cc.buddies.cleanarch.data.manager.UserManager;
+import cc.buddies.cleanarch.domain.model.UserModel;
 import cc.buddies.cleanarch.main.adapter.PostsPagedListAdapter;
 import cc.buddies.cleanarch.main.viewmodel.SquareViewModel;
 import cc.buddies.component.common.utils.DensityUtils;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class SquareFragment extends BaseFragment {
 
     private SquareViewModel mSquareViewModel;
@@ -42,15 +47,19 @@ public class SquareFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         this.mSquareViewModel = new ViewModelProvider(this).get(SquareViewModel.class);
 
-        this.mSquareViewModel.postsPagedListLiveData.observe(getViewLifecycleOwner(), postEntities ->
-                mPostsPagedListAdapter.submitList(postEntities));
+        this.mSquareViewModel.postsPagedListLiveData.observe(getViewLifecycleOwner(), postWithDetails ->
+                mPostsPagedListAdapter.submitList(postWithDetails));
+
+        this.mSquareViewModel.praisePostLiveData.observe(getViewLifecycleOwner(), booleanDataResult -> {
+
+        });
     }
 
     private void initView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        if (recyclerView.getItemDecorationCount() != 0) {
+        if (recyclerView.getItemDecorationCount() == 0) {
             int offset = DensityUtils.dp2px(requireContext(), 12);
 
             recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -67,6 +76,32 @@ public class SquareFragment extends BaseFragment {
 
         mPostsPagedListAdapter = new PostsPagedListAdapter();
         recyclerView.setAdapter(mPostsPagedListAdapter);
+
+        // 解决点赞刷新的时候item闪烁。
+        if (recyclerView.getItemAnimator() instanceof DefaultItemAnimator) {
+            ((DefaultItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        }
+
+        // 点赞/评论/分享
+        mPostsPagedListAdapter.setOnPostClickGoodListener(new PostsPagedListAdapter.OnPostClickViewListener() {
+            @Override
+            public void onPostClickGood(long postId, boolean addOrCancel) {
+                UserModel userInfo = UserManager.getInstance().getUserInfo();
+                long uid = userInfo == null ? 0 : userInfo.getUid();
+
+                mSquareViewModel.praisePost(postId, uid, addOrCancel);
+            }
+
+            @Override
+            public void onPostClickComment(long postId) {
+
+            }
+
+            @Override
+            public void onPostClickShare(long postId) {
+
+            }
+        });
     }
 
 }

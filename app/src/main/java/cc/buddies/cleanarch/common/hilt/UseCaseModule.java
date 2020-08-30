@@ -1,11 +1,13 @@
 package cc.buddies.cleanarch.common.hilt;
 
+import cc.buddies.cleanarch.domain.interactor.PraisePostUseCase;
 import cc.buddies.cleanarch.domain.interactor.GetNewsUseCase;
 import cc.buddies.cleanarch.domain.interactor.LoginUseCase;
 import cc.buddies.cleanarch.domain.interactor.ModifyUserAvatarUseCase;
 import cc.buddies.cleanarch.domain.interactor.ModifyUserNicknameUseCase;
 import cc.buddies.cleanarch.domain.interactor.RegisterUseCase;
 import cc.buddies.cleanarch.domain.repository.NewsRepository;
+import cc.buddies.cleanarch.domain.repository.PostRepository;
 import cc.buddies.cleanarch.domain.repository.UserRepository;
 import dagger.Module;
 import dagger.Provides;
@@ -39,6 +41,11 @@ public class UseCaseModule {
     @Provides
     ModifyUserNicknameUseCase provideModifyUserNicknameUseCase(UserRepository repository) {
         return new ModifyUserNicknameUseCase(repository);
+    }
+
+    @Provides
+    PraisePostUseCase provideClickPostGoodUseCase(PostRepository repository) {
+        return new PraisePostUseCase(repository);
     }
 
 }

@@ -8,23 +8,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import cc.buddies.cleanarch.R;
-import cc.buddies.cleanarch.data.manager.UserManager;
-import cc.buddies.cleanarch.data.serialize.JSONUtils;
-import cc.buddies.cleanarch.data.service.PostRepositoryImpl;
-import cc.buddies.cleanarch.domain.interactor.ReleasePostUseCase;
-import cc.buddies.cleanarch.domain.model.UserModel;
-import cc.buddies.cleanarch.domain.repository.PostRepository;
-import cc.buddies.cleanarch.domain.request.ReleasePostParams;
 import cc.buddies.cleanarch.main.activity.MainActivity;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SplashActivity extends AppCompatActivity {
@@ -71,31 +61,33 @@ public class SplashActivity extends AppCompatActivity {
         // do something, waiting until finish.
 
         // 添加测试数据
-        if (UserManager.getInstance().isLogin()) {
-            PostRepository postRepository = new PostRepositoryImpl(getApplicationContext());
-            ReleasePostUseCase releasePostUseCase = new ReleasePostUseCase(postRepository);
-
-            UserModel userInfo = UserManager.getInstance().getUserInfo();
-            long uid = userInfo == null ? 0 : userInfo.getUid();
-
-            List<String> images = new ArrayList<>();
-            images.add("https://03imgmini.eastday.com/mobile/20200830/20200830010352_bba0bd88a66c45b504843b0d8c3cbca1_2_mwpm_03200403.jpg");
-            images.add("https://09imgmini.eastday.com/mobile/20200830/20200830010242_817f649a9669e2cbd3c7a4757c2fb30b_10_mwpm_03200403.jpg");
-            images.add("https://00imgmini.eastday.com/mobile/20200830/20200830010241_68b6c156023c8ef65c40445f2330fb58_6_mwpm_03200403.jpg");
-
-            ReleasePostParams releasePostParams = new ReleasePostParams();
-            releasePostParams.setUserId(uid);
-            releasePostParams.setDescription("测试数据");
-            releasePostParams.setImages(images);
-
-            Disposable subscribe = releasePostUseCase.execute(releasePostParams)
-                    .observeOn(Schedulers.io())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(postModel -> Log.d("aaaa", "添加测试帖子成功: " + JSONUtils.toJSON(postModel)),
-                            throwable -> Log.d("aaaa", "添加测试帖子失败: " + throwable.getMessage()));
-
-            this.mCompositeDisposable.add(subscribe);
-        }
+//        if (UserManager.getInstance().isLogin()) {
+//            PostDao postDao = DBDaoFactory.getPostDao(getApplicationContext());
+//            PostPraiseDao postPraiseDao = DBDaoFactory.getPostPraiseDao(getApplicationContext());
+//            PostRepository postRepository = new PostRepositoryImpl(postDao, postPraiseDao);
+//            ReleasePostUseCase releasePostUseCase = new ReleasePostUseCase(postRepository);
+//
+//            UserModel userInfo = UserManager.getInstance().getUserInfo();
+//            long uid = userInfo == null ? 0 : userInfo.getUid();
+//
+//            List<String> images = new ArrayList<>();
+//            images.add("https://03imgmini.eastday.com/mobile/20200830/20200830010352_bba0bd88a66c45b504843b0d8c3cbca1_2_mwpm_03200403.jpg");
+//            images.add("https://09imgmini.eastday.com/mobile/20200830/20200830010242_817f649a9669e2cbd3c7a4757c2fb30b_10_mwpm_03200403.jpg");
+////            images.add("https://00imgmini.eastday.com/mobile/20200830/20200830010241_68b6c156023c8ef65c40445f2330fb58_6_mwpm_03200403.jpg");
+//
+//            ReleasePostParams releasePostParams = new ReleasePostParams();
+//            releasePostParams.setUserId(uid);
+//            releasePostParams.setDescription("找朋友PY了台Z17的全新机，拿到手的时候被新机膜包的严严实实的，讲道理个人觉得这个正面外观放到现在也还是挺耐看的。整体显示效果还可以，彩虹纹感知不强。刷了个Los,再配上一代神U 835。将就着用用吧。毕竟这玩意只要五百块钱还要什么自行车[doge]...");
+//            releasePostParams.setImages(images);
+//
+//            Disposable subscribe = releasePostUseCase.execute(releasePostParams)
+//                    .observeOn(Schedulers.io())
+//                    .subscribeOn(Schedulers.io())
+//                    .subscribe(postModel -> Log.d("aaaa", "添加测试帖子成功: " + JSONUtils.toJSON(postModel)),
+//                            throwable -> Log.d("aaaa", "添加测试帖子失败: " + throwable.getMessage()));
+//
+//            this.mCompositeDisposable.add(subscribe);
+//        }
 
         this.waitTime = System.currentTimeMillis() - beforeTime;
     }
