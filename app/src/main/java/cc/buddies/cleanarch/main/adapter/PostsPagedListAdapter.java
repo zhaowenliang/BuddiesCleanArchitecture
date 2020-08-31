@@ -8,13 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.TextViewCompat;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
@@ -168,10 +168,11 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
                     @Override
                     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                         super.getItemOffsets(outRect, view, parent, state);
-                        if (!(parent.getLayoutManager() instanceof GridLayoutManager)) return;
+                        // 因为使用GridLayoutManager.SpanSizeLookup计算跨列，所以不能使用GridLayoutManager.getSpanCount获取列数。
+                        int itemCount = imagesQuickAdapter.getItemCount();
+                        int spanCount = Math.min(itemCount, 3);
 
                         int position = parent.getChildLayoutPosition(view);
-                        int spanCount = ((GridLayoutManager) parent.getLayoutManager()).getSpanCount() / 2; // 因为计算跨列比重，所以将其乘2变成了偶数。
                         int column = position % spanCount; // item column
 
                         outRect.left = column * itemOffset / spanCount; // column * (列间距 * (1f / 列数))
@@ -221,6 +222,13 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
             @Override
             protected void convert(@NotNull BaseViewHolder holder, String s) {
                 ImageView imageView = holder.getView(R.id.image_view);
+
+                ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+                if (layoutParams instanceof ConstraintLayout.LayoutParams) {
+                    boolean isSingleItem = getItemCount() == 1;
+                    ((ConstraintLayout.LayoutParams) layoutParams).dimensionRatio = isSingleItem ? "2:1" : "1:1";
+                }
+
                 Glide.with(imageView).load(s).into(imageView);
             }
 
