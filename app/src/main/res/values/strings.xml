@@ -24,6 +24,8 @@
     <string name="login_label">登录</string>
     <string name="register_label">注册</string>
 
+    <string name="image_preview_label">图片预览</string>
+
     <string name="image_content_description">图片</string>
 
     <string name="state_empty_no_data">暂无数据</string>

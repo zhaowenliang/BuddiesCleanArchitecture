@@ -45,10 +45,7 @@ public class MessageFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         fitTranslucentStatusBar(view.findViewById(R.id.panel_message_title));
         translucentStatusBar(false);
-
-        if (savedInstanceState == null) {
-            initView(view);
-        }
+        initView(view);
     }
 
     @Override

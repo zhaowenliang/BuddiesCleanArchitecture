@@ -78,6 +78,12 @@ dependencies {
     // RecyclerView.Adapter封装
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:${cymchad_recyclerview_adapter_helper_version}"
 
+    // 圆点指示器
+    implementation "me.relex:circleindicator:${relex_circleindicator_version}"
+
+    // 大图加载
+    implementation "com.davemorrissey.labs:subsampling-scale-image-view-androidx:${subsampling_scale_image_view_version}"
+
     // 个人仓库，已发布到JitPack
     implementation "com.github.zhaowenliang.BuddiesComponent:common:${buddies_component_version}"
 

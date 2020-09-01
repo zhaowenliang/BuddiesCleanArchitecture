@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/image_preview_navigation"
+    app:startDestination="@id/navigation_image_preview">
+
+    <fragment
+        android:id="@+id/navigation_image_preview"
+        android:name="cc.buddies.cleanarch.common.fragment.ImagePreviewFragment"
+        android:label="@string/image_preview_label"
+        tools:layout="@layout/fragment_image_preview" />
+
+</navigation>

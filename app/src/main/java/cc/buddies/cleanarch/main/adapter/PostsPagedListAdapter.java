@@ -4,7 +4,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,6 @@ import java.util.List;
 import cc.buddies.cleanarch.R;
 import cc.buddies.cleanarch.data.db.entity.PostEntity;
 import cc.buddies.cleanarch.data.db.relation.PostWithDetail;
-import cc.buddies.cleanarch.data.serialize.JSONUtils;
 import cc.buddies.component.common.utils.DensityUtils;
 
 public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, PostsPagedListAdapter.PostsViewHolder> {
@@ -65,6 +63,8 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
         void onPostClickComment(long postId);
 
         void onPostClickShare(long postId);
+
+        void onPostClickImage(List<String> list, int position);
     }
 
     public PostsPagedListAdapter() {
@@ -85,7 +85,6 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
     @Override
     public void onBindViewHolder(@NonNull PostsViewHolder holder, int position) {
         PostWithDetail item = getItem(position);
-        Log.d("aaaa", "position: " + position + "  PostWithDetail: " + JSONUtils.toJSON(item));
 
         if (item == null || item.post == null) {
             // 空数据，placeholder
@@ -162,6 +161,7 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
             imagesQuickAdapter = new ImagesQuickAdapter();
             imagesRecyclerView.setAdapter(imagesQuickAdapter);
 
+            // 添加分割间距
             if (imagesRecyclerView.getItemDecorationCount() == 0) {
                 int itemOffset = DensityUtils.dp2px(itemView.getContext(), 4);
                 imagesRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -180,6 +180,20 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
                     }
                 });
             }
+
+            // 点击图片
+            imagesQuickAdapter.setOnItemClickListener((adapter, view, position) -> {
+                if (getItemFunction != null) {
+                    PostWithDetail postWithDetail = getItemFunction.apply(getAdapterPosition());
+                    if (postWithDetail == null || postWithDetail.post == null || postWithDetail.post.images == null)
+                        return;
+                    if (position >= postWithDetail.post.images.size()) return;
+
+                    if (clickViewListener != null) {
+                        clickViewListener.onPostClickImage(postWithDetail.post.images, position);
+                    }
+                }
+            });
 
             textGood.setOnClickListener(v -> {
                 if (clickViewListener != null) {
