@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.ViewCompat;
 import androidx.core.widget.TextViewCompat;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
@@ -64,7 +65,7 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
 
         void onPostClickShare(long postId);
 
-        void onPostClickImage(List<String> list, int position);
+        void onPostClickImage(View view, List<String> list, int position);
     }
 
     public PostsPagedListAdapter() {
@@ -115,12 +116,17 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
             holder.textShare.setText(String.valueOf(post.shareCount));
 
             // 图片列表
-            holder.submitImages(item.post.images);
+            holder.submitImages(item.post.images, getItemId(position));
 
             boolean hasPraise = item.praiseId > 0;
             ColorStateList colorStateList = ColorStateList.valueOf(hasPraise ? Color.RED : Color.GRAY);
             TextViewCompat.setCompoundDrawableTintList(holder.textGood, colorStateList);
         }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     static class PostsViewHolder extends RecyclerView.ViewHolder {
@@ -182,15 +188,17 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
             }
 
             // 点击图片
-            imagesQuickAdapter.setOnItemClickListener((adapter, view, position) -> {
-                if (getItemFunction != null) {
-                    PostWithDetail postWithDetail = getItemFunction.apply(getAdapterPosition());
-                    if (postWithDetail == null || postWithDetail.post == null || postWithDetail.post.images == null)
-                        return;
-                    if (position >= postWithDetail.post.images.size()) return;
+            imagesQuickAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                if (view.getId() == R.id.image_view) {
+                    if (getItemFunction != null) {
+                        PostWithDetail postWithDetail = getItemFunction.apply(getAdapterPosition());
+                        if (postWithDetail == null || postWithDetail.post == null || postWithDetail.post.images == null)
+                            return;
+                        if (position >= postWithDetail.post.images.size()) return;
 
-                    if (clickViewListener != null) {
-                        clickViewListener.onPostClickImage(postWithDetail.post.images, position);
+                        if (clickViewListener != null) {
+                            clickViewListener.onPostClickImage(view, postWithDetail.post.images, position);
+                        }
                     }
                 }
             });
@@ -223,19 +231,30 @@ public class PostsPagedListAdapter extends PagedListAdapter<PostWithDetail, Post
             });
         }
 
-        public void submitImages(List<String> data) {
+        public void submitImages(List<String> data, long itemId) {
+            imagesQuickAdapter.setInListItemId(itemId);
             imagesQuickAdapter.setNewInstance(data);
         }
 
         private static class ImagesQuickAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
+            private long inListItemId;
+
             public ImagesQuickAdapter() {
                 super(R.layout.layout_square_list_images_item);
+                addChildClickViewIds(R.id.image_view);
+            }
+
+            public void setInListItemId(long inListItemId) {
+                this.inListItemId = inListItemId;
             }
 
             @Override
             protected void convert(@NotNull BaseViewHolder holder, String s) {
                 ImageView imageView = holder.getView(R.id.image_view);
+                // 根据嵌套列表对应itemId，计算当前item唯一id。
+                String transitionName = "preview_image_" + inListItemId + "_" + holder.getAdapterPosition();
+                ViewCompat.setTransitionName(imageView, transitionName);
 
                 ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
                 if (layoutParams instanceof ConstraintLayout.LayoutParams) {

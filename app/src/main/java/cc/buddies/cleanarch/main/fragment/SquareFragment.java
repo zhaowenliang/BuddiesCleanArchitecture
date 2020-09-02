@@ -6,8 +6,10 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -107,7 +109,7 @@ public class SquareFragment extends BaseFragment {
             }
 
             @Override
-            public void onPostClickImage(List<String> list, int position) {
+            public void onPostClickImage(View view, List<String> list, int position) {
 //                String url1 = "https://desk-fd.zol-img.com.cn/t_s4096x2160c5/g6/M00/0B/03/ChMkKV9MqWyIQ5OnABptwzfj6goAABsjwAAQ9wAGm3b490.jpg";
 //                String url2 = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598980627083&di=4359fd94a3daf3964298bbbd30932977&imgtype=0&src=http%3A%2F%2Fcdn.duitang.com%2Fuploads%2Fitem%2F201407%2F20%2F20140720141804_j2zi5.thumb.700_0.jpeg";
 //                String url3 = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598980791264&di=5033992955be4610522d21be13c66fae&imgtype=0&src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F36c59ff6a9b5cc45d71181f930036e35b8a54d9d.jpg";
@@ -119,12 +121,19 @@ public class SquareFragment extends BaseFragment {
 //                strings.add(url3);
 //                strings.add(url4);
 
+                String transitionName = ViewCompat.getTransitionName(view);
+
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("data", new ArrayList<>(list));
                 bundle.putInt("position", position);
+                bundle.putString("transitionName", transitionName);
 
-                NavHostFragment.findNavController(SquareFragment.this)
-                        .navigate(R.id.action_to_image_preview, bundle);
+                FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
+                        .addSharedElement(view, transitionName == null ? "" : transitionName)
+                        .build();
+
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_to_image_preview, bundle, null, extras);
             }
         });
     }

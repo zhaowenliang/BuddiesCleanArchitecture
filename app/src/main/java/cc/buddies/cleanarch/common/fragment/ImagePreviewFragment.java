@@ -1,12 +1,16 @@
 package cc.buddies.cleanarch.common.fragment;
 
 import android.os.Bundle;
+import android.transition.TransitionInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,7 @@ public class ImagePreviewFragment extends Fragment {
 
     private List<String> data;
     private int position;
+    private String transitionName;
 
     private List<Fragment> fragments;
 
@@ -34,10 +39,12 @@ public class ImagePreviewFragment extends Fragment {
         super(contentLayoutId);
     }
 
-    public static ImagePreviewFragment newInstance(ArrayList<String> data, int position) {
+    @NotNull
+    public static ImagePreviewFragment newInstance(ArrayList<String> data, int position, String transitionName) {
         Bundle args = new Bundle();
         args.putStringArrayList("data", data);
         args.putInt("position", position);
+        args.putString("transitionName", transitionName);
 
         ImagePreviewFragment fragment = new ImagePreviewFragment();
         fragment.setArguments(args);
@@ -47,9 +54,12 @@ public class ImagePreviewFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+
         if (getArguments() != null) {
             this.data = getArguments().getStringArrayList("data");
             this.position = getArguments().getInt("position", 0);
+            this.transitionName = getArguments().getString("transitionName", "");
         }
     }
 
@@ -76,6 +86,8 @@ public class ImagePreviewFragment extends Fragment {
 
     private void initView(View view) {
         ViewPager viewPager = view.findViewById(R.id.view_pager);
+        ViewCompat.setTransitionName(viewPager, transitionName);
+
         viewPager.setAdapter(new CommonPagerAdapter(getChildFragmentManager(), fragments));
         viewPager.setCurrentItem(position);
 
